@@ -1,4 +1,4 @@
-#summary A brief discussion of the main classes from a developers perspective.
+#summary A brief discussion of the main classes of BASE.
 
 = Introduction =
 
