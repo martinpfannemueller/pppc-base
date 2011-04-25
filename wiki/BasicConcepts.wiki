@@ -1,4 +1,4 @@
-#summary This page discusses the basic concepts of BASE.
+#summary A brief description of the basic concepts of BASE.
 
 = Introduction =
 
