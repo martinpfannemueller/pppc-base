@@ -1,0 +1,10 @@
+#summary A brief description of the available BASE plug-ins.
+
+= Introduction =
+
+This page contains a list of the available BASE plug-ins that are part of the distribution. All plug-ins are strictly optional, however, in order to be useful, BASE requires at least one complete stack of plug-ins. A complete stack usually encompasses a discovery plug-in, a transceiver plug-in and a semantic plug-in. 
+
+= BASE Plug-ins =
+
+|| *Project* || *Name* || *Type* || *Platform* || *Description* ||
+ 
