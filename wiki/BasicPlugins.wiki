@@ -4,9 +4,13 @@
 
 This page contains a list of the available BASE plug-ins that are part of the distribution. All plug-ins are strictly optional, however, in order to be useful, BASE requires at least one complete stack of plug-ins. A complete stack usually encompasses a discovery plug-in, a transceiver plug-in, a serializer plug-in and a semantic plug-in. 
 
-= BASE Plug-ins =
+In addition, the page also lists a number of ultility classes that can simplify the development of additional plug-ins. The utility classes primarily focus on connection multiplexing and group-based communication.
 
-|| *Project*       || *Name* || *Type* || *Platform* || *Description* ||
+= Plug-ins =
+
+The list below outlines all plug-ins that are part of the BASE distribution to date. The plug-ins are distributed over a set of projects to simplify compilation for different platforms.
+
+|| *Project* || *Name* || *Type* || *Platform* || *Description* ||
 || BASE Plug-in || !ProactiveDiscovery || Discovery || Any || A device discovery plug-in that distributes device and plug-in descriptions periodically. ||
 || BASE Plug-in || GZIPCompressor || Compression || Any || A modifier plug-in that compresses byte streams using GZIP ||
 || BASE Plug-in || !ProactiveRouting || Routing || Any || A plug-in that uses source-routing with proactive n-hop route distribution to enable multihop routing within a smart peer group. ||
@@ -28,3 +32,14 @@ This page contains a list of the available BASE plug-ins that are part of the di
 || BASE Plug-in SS || !MxSerialTransceiver || Transceiver || SunSPOT || A transceiver plug-in that enables multiplexed communciation via the serial port of a SunSPOT.||
 || BASE Plug-in SS || !MxSpotTransceiver || Transceiver || SunSPOT || A transceiver plug-in that enables multiplexed communication via the 802.15.4 interface of a SunSPOT. ||
 
+= Utilities =
+
+The *BASE Core* project and the *BASE Plug-in* project contain a number of utility classes that simplify plug-in development. All utility classes adhere to the J2ME CLDC specification and do not introduce further dependencies.
+
+|| *Project* || *Name* || *Type* || *Descripton* ||
+|| BASE Core || FragmentConnector || Connector || A connector that provides fragmentation for packets that exceed the length of the underlying connector. ||
+|| BASE Core || GroupConnector || Connector || A connector that multiplexes a single connector into different groups by attaching an additional header. ||
+|| BASE Plug-in || FloodConnector || Connector || A connector that implements scoped flooding of packets sent via the connector. ||
+|| BASE Plug-in || TimeoutConnector || Connector || A connector that implements a simple synchronization protocol for unbuffered connections. ||
+|| BASE Plug-in || MultiplexFactory || Multiplexer || A multiplexer that can multiplex a single stream to provide connection-oriented and packet-based communication over it. ||
+ 
