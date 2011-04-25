@@ -8,7 +8,7 @@ To simplify application development, BASE ships with a number of code generators
 
 You can install the BASE Eclipse plug-in just like any other plug-in by adding the following update site to Eclipse:
 
-'_http://www.3pc.info/eclipse_'
+  _http://www.3pc.info/eclipse_
 
 To do this, open Eclipse and choose *Help->Install New Software...*. Press the *Add...* button on the wizard page to add the above location. Choose the location, select the BASE plug-in and finish the wizard.
 
