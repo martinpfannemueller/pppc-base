@@ -12,7 +12,7 @@ Running the middleware on a PC is as simple as running any other Java program. T
 
 Running the middleware on a PDA requires a virtual machine such as J9, for example. In order to use J9, you need unzip the file on the PDA. I would recommend using the CDC with foundation profile. Next, you need to create a JAR with the middleware and copy it to the PDA. Finally, you need to create a launcher link that you place, for example, in the "\Windows\Programs" directory. The link file should end with the extension '''.lnk''' and it should contain plain text that looks as follows: '''237#"\`<PATH_TO_J9>`\j9.exe" "-cp" "\`<PATH_TO_JAR>`\yourcode.jar" "-jcl:foun10" "`<CLASSNAME_TO_START>`"'''. Please note that there is a limit on the number of characters that you can put in a '''.lnk''' file. I believe it was 256 characters or something like that. So it might make sense not to use a very deep directory structure.
 
-= Sunspot =
+= SunSPOT =
 
 Running the middleware on a sunspot requires a sunspot development kit. This can be installed automatically via the sunspot manager which is a Java webstart application. The sunspot manager will also install apache ant and netbeans. After installing the development kit, simply connect the sunspot and the driver should install automatically (on windows x86, on windows x64 you need to modify the sunspot.inf file in \windows\inf). Once the sunspot is connected, you can simply deploy the bundle consisting of your application and the middleware using netbeans. The details of this process are described within the developers guide that can be found in the doc directory of the sdk.
 
