@@ -2,9 +2,31 @@
 
 = Introduction =
 
-This page contains a list of the available BASE plug-ins that are part of the distribution. All plug-ins are strictly optional, however, in order to be useful, BASE requires at least one complete stack of plug-ins. A complete stack usually encompasses a discovery plug-in, a transceiver plug-in and a semantic plug-in. 
+This page contains a list of the available BASE plug-ins that are part of the distribution. All plug-ins are strictly optional, however, in order to be useful, BASE requires at least one complete stack of plug-ins. A complete stack usually encompasses a discovery plug-in, a transceiver plug-in, a serializer plug-in and a semantic plug-in. 
 
 = BASE Plug-ins =
 
-|| *Project* || *Name* || *Type* || *Platform* || *Description* ||
- 
+|| *Project*       || *Name* || *Type* || *Platform* || *Description* ||
+|| BASE Plug-in || ProactiveDiscovery || Discovery || Any || A device discovery plug-in that distributes device and plug-in descriptions periodically. ||
+|| BASE Plug-in || GZIPCompressor || Compression || Any || A modifier plug-in that compresses byte streams using GZIP ||
+|| BASE Plug-in || ProactiveRouting || Routing || Any || A plug-in that uses source-routing with proactive n-hop route distribution to enable multihop routing within a smart peer group. ||
+|| BASE Plug-in || RMISemantic || Semantic || Any || A plug-in that enables request-response interaction with at-most-once semantic. ||
+|| BASE Plug-in || StreamSemantic || Semantic || Any || A plug-in that enables technology-independent connection-oriented communication between application objects. ||
+|| BASE Plug-in || ObjectSerializer || Serializer || Any || A plug-in that marshalls and unmarshalls Java objects. ||
+|| BASE Plug-in AD || MxBluetoothTransceiver || Transceiver || Android 2.1 || A Bluetooth transceiver for Android devices that uses connection multiplexing. ||
+|| BASE Plug-in BT || MxBluetoothTransceiver || Transceiver || Any, JSR-82 || A Bluetooth transceiver relying on JSR-82 that uses connection multiplexing. ||
+|| BASE Plug-in EM || MxIPEmulatorTransceiver || Transceiver || Any, IP || A transceiver plug-in to emulate different network topologies using multiplexed IP connections. ||
+|| BASE Plug-in IP || IPBroadcastTransceiver || Transceiver || Any, IP || A transceiver plug-in that uses IP broadcast for group communication. ||
+|| BASE Plug-in IP || MxIPBroadcastTransceiver || Transceiver || Any, IP || An extended IPBroadcastTransceiver that uses connection multiplexing. ||
+|| BASE Plug-in IP || IPMulticastTransceiver || Transceiver || Any, IP || A transceiver plug-in that uses IP multicast for group communication. ||
+|| BASE Plug-in IP || MxIPMulticastTransceiver || Transceiver || Any, IP || An extended IPMulticastTransceiver that uses connection multiplexing. ||
+|| BASE Plug-in IP || ProactiveRoutingGateway || Routing || Any, IP || An extended ProactiveRouting plug-in that provides routing beyond smart peer groups through a routing server on the Internet.||
+|| BASE Plug-in IR || MxIRTransceiver || Transceiver || Windows, Windows CE || A transceiver plug-in that uses WinSock to establish multiplexed connections over IRDA. ||
+|| BASE Plug-in SC || SecureModifier || Encryption || Any, Bouncycastle || An plug-in that uses Bouncycastle to encrypt communication via AES. ||
+|| BASE Plug-in SC || ExchangeSemantic || Semantic || Any, Bouncycastle || A plug-in that uses Bouncycastle to enable automatic key-exchange via different key-exchange protocols. ||
+|| BASE Plug-in SE || MxSerialTransceiver || Transceiver || Any, Rxtx || A transceiver plug-in that uses the RXTX library to provide multiplexed interaction over a serial connection. ||
+|| BASE Plug-in SS || MxSerialTransceiver || Transceiver || SunSPOT || A transceiver plug-in that enables multiplexed communciation via the serial port of a SunSPOT.||
+|| BASE Plug-in SS || MxSpotTransceiver || Transceiver || SunSPOT || A transceiver plug-in that enables multiplexed communication via the 802.15.4 interface of a SunSPOT. ||
+
+
+
