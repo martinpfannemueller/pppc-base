@@ -36,10 +36,10 @@ The list below outlines all plug-ins that are part of the BASE distribution to d
 
 The *BASE Core* project and the *BASE Plug-in* project contain a number of utility classes that simplify plug-in development. All utility classes adhere to the J2ME CLDC specification and do not introduce further dependencies.
 
-|| *Project* || *Name* || *Type* || *Descripton* ||
-|| BASE Core || FragmentConnector || Connector || A connector that provides fragmentation for packets that exceed the length of the underlying connector. ||
-|| BASE Core || GroupConnector || Connector || A connector that multiplexes a single connector into different groups by attaching an additional header. ||
-|| BASE Plug-in || FloodConnector || Connector || A connector that implements scoped flooding of packets sent via the connector. ||
-|| BASE Plug-in || TimeoutConnector || Connector || A connector that implements a simple synchronization protocol for unbuffered connections. ||
-|| BASE Plug-in || MultiplexFactory || Multiplexer || A multiplexer that can multiplex a single stream to provide connection-oriented and packet-based communication over it. ||
+|| *Project* || *Name* || *Type* || *Platform* || *Descripton* ||
+|| BASE Core || !FragmentConnector || Connector || Any || A connector that provides fragmentation for packets that exceed the length of the underlying connector. ||
+|| BASE Core || !GroupConnector || Connector || Any || A connector that multiplexes a single connector into different groups by attaching an additional header. ||
+|| BASE Plug-in || !FloodConnector || Connector || Any || A connector that implements scoped flooding of packets sent via the connector. ||
+|| BASE Plug-in || !TimeoutConnector || Connector || Any || A connector that implements a simple synchronization protocol for unbuffered connections. ||
+|| BASE Plug-in || !MultiplexFactory || Multiplexer || Any || A multiplexer that can multiplex a single stream to provide connection-oriented and packet-based communication over it. ||
  
