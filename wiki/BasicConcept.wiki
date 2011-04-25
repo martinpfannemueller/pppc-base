@@ -30,7 +30,7 @@ In order to support the runtime composition of communication stacks, BASE separa
 Underneath the middleware, the operating system manages the available network interfaces and provides an application programming interface which may be specific for a certain technology. To abstract from the differences, it is necessary to specify a common interface. Due to the fact that discovery plug-ins need to distribute availability information among all available devices and due to the fact that many communication abstractions need to transmit larger amounts of data reliably, BASE relies on a socket-style API that supports unreliable packet-oriented communication with local broadcast semantic for discovery and reliable connection-oriented communication for the transmission of invocations. 
 
 http://pppc-base.googlecode.com/svn/wiki/images/pluginlayers.png
-*Figure 2: Plug-in Layers*
+<p align=center>*Figure 2: Plug-in Layers*</p>
 
 Given that the lowest layer supports connection-oriented communication, the protocols above need to operate on the byte-streams of the connection. Since BASE is built on top of an object-oriented programming language, it is possible classify the protocols in protocols that solely modify the byte-stream and protocols that (de-) serialize objects. A simple example for a functionality that falls into the first class is data compression that performs run-length encoding on chunks of input data. A more complex example is a plug-in for secure communication that uses asymmetric encryption to exchange a symmetric session key. In contrast to the first example, the second introduces additional data transfers, e.g. an initial hand-shake to securely distribute a session key. On top of protocols that operate solely on the byte stream, we may have additional protocols that generate byte-streams from objects and vice versa. 
 
@@ -47,7 +47,7 @@ The individual requirements can be specified at various levels of details rangin
 In order to deal with these two issues in an efficient manner, BASE separates the composition into a negotiation phase during which a set of plug-ins is computed and a connection phase during which a previously negotiated set of plug-ins is connected. In order to enable plug-ins to refine the requirements on lower layers, the negotiation phase must be performed top-down as depicted on the right side of Figure 3. The connection phase, on the contrary, should be performed in a bottom-up fashion as shown in Figure 4. As explained later on, the bottom up connection simplifies the interfaces of plug-ins by enabling the reuse of methods on the receiver and the sender side. Furthermore, it avoids the introduction of a lifecycle during the connection phase since plug-ins can rely on the fact that lower layers are fully initialized. In the following, we describe the details of these phases. For simplicity, we assume that the invocation represents a remote method invocation that returns a result. However, other communication abstractions can be implemented analogously.
 
 http://pppc-base.googlecode.com/svn/wiki/images/pluginnegotiation.png
-*Figure 3: Plug-in Negotiation*
+<p align=center>*Figure 3: Plug-in Negotiation*</p>
 
 When an invocation that represents the request must be transmitted to another system, the micro-broker forwards it to the plug-in manger as shown in step (1) of Figure 3. As explained, the requirements on the communication stack are specified using a list of parameters that is attached to the invocation. After the plug-in manager has received the invocation, it computes the candidate set of semantic plug-ins (2). If the requirements attached to the invocation are explicitly specifying a particular plug-in, the plug-in manager selects the corresponding plug-in as target. If the requirements are solely specifying implementation-specific characteristics, the plug-in manager selects all semantic plug-ins as targets. The plug-in manager asks each target plug-in whether it can fulfill the requirements specified by the parameter list (3). If the call fails, the next plug-in is selected. Otherwise, the plug-in manager aborts the process and forwards the invocation to the plug-in that acknowledged the requirements (4). If no semantic plug-in can be found, the plug-in manager signals this to the invocation broker which informs the application. After the semantic plug-in has received the invocation, it will transmit it to the remote system and after receiving the result, it forwards an invocation that represents the result to the plug-in manager (5). The plug-in manager in turn will forward the invocation to the broker (6) which will deliver the result, e.g. by releasing a blocked application thread. 
 
@@ -73,7 +73,7 @@ When the transceiver on the client-side contacts an end-point, it uniquely ident
 Once the session objects have been transmitted, the plug-in manager on the client-side initializes the remaining plug-ins. When a plug-in must be added the manager requests a connector from the plug-in. To do this, it passes the corresponding session object together with the connector of the transceiver (4). If the request succeeds, the modifier returns a new connector. This connector typically wraps the connector of the transceiver and provides new input and output streams using the underlying streams. The connector returned by the modifier may then be used to initialize the serializer. Analogous to the initialization of a modifier, the plug-in manager simply requests a new connector by passing the session object together with the connector from the last plug-in that has been initialized (5). Once the connector is returned, the manager passes the connector to the semantic plug-in as a response to the initial request (1). 
 
 http://pppc-base.googlecode.com/svn/wiki/images/pluginconnection.png
-*Figure 4: Plug-in Connection*
+<p align=center>*Figure 4: Plug-in Connection*</p>
 
 At the server-side this process is mirrored. However, since the server is passive, the connection establishment is started in response to the connection attempt of the client. Once the client-side has established a connection at the transceiver layer, the transceiver plug-in at the server-side signals the new connection by passing a connector to the plug-in manager as depicted in step (1’) on the right side of Figure 5. Using this connector, the plug-in manager receives the session objects from the client (2’). Thereafter, it initializes the modifier (3’) and serializer (4’) plug-in. As a last step, the plug-in manager forwards the connector to the semantic plug-in (5’) which takes care of the actual data reception and interpretation. If this process fails at any point in time on the client- or on the server-side, the plug-ins may signal this through an exception and the plug-in manager takes care of closing the opened connection. The premature disconnection eventually causes a failure on the opposite side as well and the other plug-in manager can also perform the cleanup.
 
@@ -92,11 +92,4 @@ In order to make the device and plug-in descriptions available to the remaining 
 As indicated previously, the core of the BASE middleware and a number of plug-ins are freely available as open source. The available software is implemented in Java. The core of the middleware is written against the Micro Edition of the Java 2 Platform. The minimum requirement for running the core on a device is the availability of a Connected Limited Device Configuration (CLDC) for the device. 
 
 http://pppc-base.googlecode.com/svn/wiki/images/implementation.png
-*Figure 5: Device Support*
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+<p align=center>*Figure 5: Device Support*</p>
