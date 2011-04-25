@@ -6,7 +6,7 @@ This page provides howtos for deploying BASE on different devices.
 
 = Personal Computer =
 
-Running the middleware on a PC is as simple as running any other Java program. That means that you need to install a virtual machine which you can get for free. Please note that some of the libraries that are used by some extensions of BASE require native libraries. For example, the bluetooth transceiver requires the JSR-82 specification which is implemented by the Bluecove Sourceforge project. This library requires an appropriate dll. In order to enable the virtual machine to find this DLL, you can either add the directory with the dll to the PATH variable or you must set the "java.libaray.path" variable via the "-D" switch, e.g. "-Djava.library.path="'<'DIRECTORY>".
+Running the middleware on a PC is as simple as running any other Java program. That means that you need to install a virtual machine which you can get for free. Please note that some of the libraries that are used by some extensions of BASE require native libraries. For example, the bluetooth transceiver requires the JSR-82 specification which is implemented by the Bluecove Sourceforge project. This library requires an appropriate dll. In order to enable the virtual machine to find this DLL, you can either add the directory with the dll to the PATH variable or you must set the "java.libaray.path" variable via the "-D" switch, e.g. "-Djava.library.path="'<DIRECTORY>'".
 
 = Windows Mobile PDA =
 
