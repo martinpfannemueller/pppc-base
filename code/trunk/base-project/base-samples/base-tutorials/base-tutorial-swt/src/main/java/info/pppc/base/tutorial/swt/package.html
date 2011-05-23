@@ -1,0 +1,29 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains an exemplary service that demonstrates 
+application development with BASE. The class that contains the main
+method is UiMain. The main method shows how to bootstrap a simple
+version of BASE with a set of plug-ins and one service. To do this,
+the application simply reuses the RMI example. In addition, it also
+enables the SWT based user interface.
+</p>
+<p>
+To use the user interface, it is necessary to reference the corresponding
+project. Furthermore, it is necessary to instantiate the ui. This can
+be done by calling the getInstance method in the application class, i.e.
+<code>Application.getInstance();</code>. This opens the application 
+window and by default, it also redirects the logging streams to the
+console window. 
+</p>
+<p>
+By calling <code>BaseUI.registerSystemBrowser();</code> in addition,
+the system will register the system browser extension into the user
+interface. The system browser enables the user to query the service
+registries on devices that are equipped with it. Furthermore, it 
+can be used to dynamically call methods on services.
+</p>
+</body>
+<html>

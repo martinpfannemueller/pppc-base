@@ -1,0 +1,42 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains the operation framework. The operation 
+framework is used to simplify threading and to enable BASE 
+to control it. Each thread created in BASE is not created as
+thread but as operation. The operation is then passed to the
+invocation broker that will run the operation in some thread.
+Each operation can request its state by accessing the monitor
+passed into the perform method. A monitor can be canceled 
+externally and a developer can synchronize on the completion
+of an operation.
+</p>
+<p>
+The multi operation can be used to execute multiple operations
+at once and to synchronize on their completion. This provides
+a barrier like synchronization. The thread that starts the
+multi operation can be used to perform one of the operations
+if desired.
+</p>
+<p>
+The operation pool can be used to limit the number of threads
+that are used to execute operations. The pool can be configured
+with a default number of threads and a maximum number. The 
+default number of threads is the number of threads that will
+be kept even if no operation needs to be performed. The
+maximum number is the number of threads that will be created
+at most.
+</p>
+<p>
+The invocation broker uses an operation pool to perform operations.
+The default and maximum number of threads can be configured using
+the system properties "info.pppc.thread.default" and 
+"info.pppc.thread.maximum" respectively. If no properties are set,
+the broker will create a thread for each operation and the number
+of threads will not be limited. Be careful if you limit the number
+of threads as this might easily lead to deadlocks.
+</p>
+</body>
+<html> 

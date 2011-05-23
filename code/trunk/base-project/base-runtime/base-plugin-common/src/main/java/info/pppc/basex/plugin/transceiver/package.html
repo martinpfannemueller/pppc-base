@@ -1,0 +1,47 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains transceiver plug-ins. Transceiver plug-ins provide
+connection-oriented bi-directional communication as well as unreliable
+packet-based communication with broadcast semantics for different
+communication technologies. Intuitively, transceiver plug-ins are platform
+dependent as they require different libraries to access the associated
+communication technology.
+</p>
+<p>
+At the present time, we support the following transceiver plug-ins:
+</p>
+<ul>
+<li>MxIPEmulatorTransceiver - An IP-based plug-in that emulates a
+	specific network topology on top of a fully connected IP network.</li>
+<li>MxBluetoothTransceiver - A Bluetooth-based transceiver plug-in
+	that uses one connection per device that is multiplexed to
+	support an arbitrary number of streams.</li>
+<li>IPBroadcastTransceiver - An IP-based transceiver that uses IP
+	broadcast for distributing packets. The use of this transceiver
+	is discouraged as it cannot be used multiple times on the same
+	device. Use the multicast-based transceiver instead.</li>
+<li>IPMulticastTransceiver - An IP-based transceiver that uses IP
+	multicast for distributing packets.</li>
+<li>IPMxBroadcastTransceiver - A multiplexed variant of the IPBroadcastTransceiver.
+	The use of this plug-in should be preferred over the simple
+	IPBroadcastTransceiver as this one should be faster due to
+	connection multiplexing.</li>
+<li>IPMxMulticastTransceiver - A multiplexed variant of the IPMulticastTransceiver.
+	This plug-in should be used as default for IP-based networks
+	as it is faster than the IPMulticastTransceiver and it also
+	uses multicast for packet distribution.</li>
+<li>MxIRTransceiver - A multiplexed transceiver that uses IrDA
+	via Winsock. The native libraries are available for Windows
+	and Windows CE.</li>
+<li>MxSerialTransceiver - A multiplexed transceiver that uses serial
+	connections for communication. Note that there are two versions
+	available (one for sunspots and one for other devices).</li>
+<li>MxSpotTransceiver - A multiplexed transceiver that uses the
+	protocols provided by the sunspot sdk to support wireless
+	communication.</li>
+</ul>
+</body>
+<html> 

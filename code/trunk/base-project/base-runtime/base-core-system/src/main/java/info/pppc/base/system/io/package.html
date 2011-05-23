@@ -1,0 +1,62 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains the basic io framework. This framework
+consists of a custom serializable interface and a corresponding
+object input and output interface as well as some default
+implementation of these in/out interfaces as java io streams.
+</p>
+<p>
+Each object that is sent via the invocation broker must implement
+the serializable interface. The default object input and output
+streams additionally provide serialization for the following classes:
+</p>
+<ul>
+<li>java.lang.Object</li>
+<li>java.lang.Boolean</li>
+<li>java.lang.Integer</li>
+<li>java.lang.Long</li>
+<li>java.lang.Short</li>
+<li>java.lang.String</li>
+<li>java.lang.Byte</li>
+<li>java.lang.Character</li>
+<li>java.util.Vector</li>
+<li>java.util.Hashtable</li>
+<li>java.util.Stack</li>
+</ul>
+<p>
+Furthermore, the serialization supports one-dimensional arrays of these
+types as well as all primitive types. 
+</p>
+<p>
+Note that the serialization does not fully serialize exceptions. Base will be 
+able to serialize the exception, and to throw it correctly, however the text 
+or data contained in an exception will be lost. Also note that due to the 
+limitations of the J2ME CLDC, base object serialization does not support:
+</p>
+<ul>
+<li>custom array types (neither one- nor multidimensional),</li>
+<li>float and double types (both, primitive and wrapper types),</li>
+<li>all other types that do not implement the serializable interface.</li>
+</ul>
+<p>
+In order to serialize objects the default input and output streams use the
+following format: (class name, instance data). In order to deserialize an 
+object, the stream first reads the class name and then creates an instance
+and calls the read object method with the stream. Therefore, each serializable
+object must have a public default constructor. Otherwise, the deserialization
+process will fail.
+</p>
+<p>
+As adding class names to the data will lead to very large messages, the default
+input and output streams use a translation for common class names. The translation
+can be customized using the object stream translator. However, you should not
+customize the basic objects as this will endanger the interoperability of various
+instances of BASE. If you are not aware of the problems that you might get with
+changing the representation of class names within the stream, you should not change
+it.
+</p>
+</body>
+<html> 

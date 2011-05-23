@@ -1,0 +1,35 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains the base lease registry. This registry
+can be used to manage leases. Leases itself are used to manage
+soft-state. Note that this package is completely optional. You
+can remove it at will to reduce the size of base.
+</p>
+<p>
+The general idea is that whenever a server creates state for a 
+client, it issues a lease. This lease can be created by calling 
+the create method on the local lease registry. The lease itself 
+is serializable and can be sent directly through base. To create
+the lease, the server passes a listener to the lease registry.
+If the lease expires, the listener will be called and the server
+can remove its state.
+</p>
+<p>
+Whenever a client gets a lease from a server, it registeres the
+lease at its local lease registry using the hook method. The lease 
+contains all necessary data, such as timeouts, device ids, and so on. 
+Together with the lease, the client passes a listener to the registry.
+This listener will be called, whenever the server is no longer
+available and does no longer have the state.
+</p>
+<p>
+After the state is no longer used by the client, the client or 
+the server can simply unhook the lease. Thereby, they can decide
+whether they want the lease registry to send a notification to the
+server or client.
+</p>
+</body>
+<html> 

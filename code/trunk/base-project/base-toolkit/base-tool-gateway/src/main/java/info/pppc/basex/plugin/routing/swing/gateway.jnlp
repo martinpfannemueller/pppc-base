@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="" href="">
+    <information>
+        <title>Gateway Applet</title>
+        <vendor>Universität Duisburg</vendor>
+    </information>
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="1.6+"
+              href="http://java.sun.com/products/autodl/j2se" />
+        <jar href="applet.jar" main="true" />
+    </resources>
+    <applet-desc 
+         name="Gateway Applet"
+         main-class="info.pppc.basex.plugin.routing.swing.GatewayApplet"
+         width="640"
+         height="480">
+     </applet-desc>
+     <update check="background"/>
+</jnlp>

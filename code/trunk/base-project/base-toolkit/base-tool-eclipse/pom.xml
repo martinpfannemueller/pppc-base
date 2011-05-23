@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>base-toolkit</artifactId>
+		<groupId>info.pppc.base</groupId>
+		<version>1.0.0</version>
+	</parent>
+	<groupId>info.pppc.base</groupId>
+	<artifactId>base-tool-eclipse</artifactId>
+	<version>1.0.0</version>
+	<packaging>eclipse-plugin</packaging>
+	<name>BASE Tool Eclipse</name>
+	<description>An eclipse plug-in that can generate stubs for the BASE middleware.</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>0.12.0</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>0.12.0</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<target>
+						<artifact>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<version>${project.version}</version>
+							<classifier>helios</classifier>
+						</artifact>
+					</target>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+					<ignoreTychoRepositories>false</ignoreTychoRepositories>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- Replaced helios site with (not much) faster mirror site. -->
+	<!-- <url>http://download.eclipse.org/releases/helios</url> -->
+
+	<!-- <repositories> <repository> <id>helios.eclipse.org</id> <layout>p2</layout> 
+		<url>http://ftp.halifax.rwth-aachen.de/eclipse/releases/helios/</url> </repository> 
+		</repositories> -->
+</project>

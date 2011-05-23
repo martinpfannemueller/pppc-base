@@ -1,0 +1,69 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains the base service registry and 
+service abstraction. In contrast to well known services
+which do not require the service registry, base services
+are not pro-actively announced. Local or remote clients
+can retrieve the reference id of a desired service using
+their local service registry. 
+</p>
+<p>
+To create a service, a developer must implement the
+abstract service class. This class introduces the concept
+of an active service. An active service is a service that
+does not only react to incoming calls, but that does issue
+calls from time to time. A passive service (which is probably
+the default for many service implementations) just sits on
+the device and waits for clients. Whenever a client calls,
+the service does some processing and might also perform
+remote calls and eventually returns a result. A developer
+can set the active/passive state of its service using the
+set active method. Setting this state of a service enables
+the service registry to provide a signal to higher level
+system services that enables them in turn to deactivate
+communication. This is used by the sandman discovery extension 
+which is not part of this distribution.
+</p>
+<p>
+Apart from sub classing the abstract service class, a
+developer must implement the desired remote interface.
+Remote interfaces must only contain serializable objects
+as parameters and return values. Each method of the
+remote interface must declare an invocation exception. 
+This exception will be used to signal a communication failure. 
+Using this remote interface, a developer can create stubs 
+(i.e., proxies and skeletons) either manually or automatically,
+through the base eclipse plug-in.
+</p>
+<p>
+After the developer has created the service that implements
+the remote interface, the service needs to be exported using
+the local service registry. The service registry is a singleton
+that can be accessed through the get instance method. To
+export the service, the developer can register the service
+using some name, its supported remote interfaces, its skeleton
+and its implementation. More detailed information can be
+exported using the so-called service properties. 
+</p>
+<p>
+When a service has been exported, clients can search for the
+service using the lookup methods provided by their local
+service registry. Clients can either search by name or by
+type. Furthermore, they can either search for local, remote
+or both types of services. The result of a query is a set
+of service descriptors. The service descriptors can be used
+to get more information about the service. The descriptors
+also contain a reference id to the remote service. A client
+can use this id to create a proxy to the service. To do this,
+the client creates the proxy, thereafter, it sets the
+source id to the local device and then it sets the target
+id to the id of the remote service.
+</p>
+<p>
+After the proxy has been created, the client can issue calls.
+</p>
+</body>
+<html> 
