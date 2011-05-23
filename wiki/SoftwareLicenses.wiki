@@ -60,7 +60,7 @@ As stated previously, the image resources contained in the swt and lcdui package
 
 The bouncycastle code is - to the best of my knowledge - distributed under an [http://www.bouncycastle.org/licence.html MIT X11 License] but apparently, there are also patents on some of the algortihms in case they are used in commercial products.
 
-The SunSPOT libraries - to which the SunSPOT related subprojects are linking - are - to the best of my knowledge - licensed under the [http://java.net/projects/spots-network-library/ GNU Public License V2]. Consequently, you might not be able to use them in a commerical closed source application - but again, I am not lawyer.
+The SunSPOT libraries - to which the SunSPOT related subprojects including the fastecc extension are linking - are - to the best of my knowledge - licensed under the [http://java.net/projects/spots-network-library/ GNU Public License V2]. Consequently, you might not be able to use them in a commerical closed source application - but again, I am not lawyer.
 
 The CLDC and MIDP stubs - that are used to compile most of the code in such a way that it executes everywhere - are - to the best of my knowledge - licensed under the [http://mcpat.github.com/java-microedition-libraries/ GNU Lesser Public License V3.0].
 
@@ -69,4 +69,3 @@ The Bluecove library - that is used to compile the JSR-82 Bluetooth plug-in and 
 = Disclaimer =
 
 The above description may not be correct, so please re-check this to be sure. I am trying to be exact here but I cannot take responsibility for whatever happens if there is a flaw.
-
