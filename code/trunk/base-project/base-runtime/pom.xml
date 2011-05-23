@@ -4,13 +4,13 @@
 	<parent>
 		<artifactId>base-project</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-runtime</artifactId>
 	<packaging>pom</packaging>
 	<name>BASE Runtime</name>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<description>The runtime of BASE including cores, extensions, and plug-ins.</description>
 	<modules>
 		<module>base-core-system</module>

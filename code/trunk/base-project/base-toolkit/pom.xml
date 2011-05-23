@@ -4,13 +4,13 @@
 	<parent>
 		<artifactId>base-project</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-toolkit</artifactId>
 	<packaging>pom</packaging>
 	<name>BASE Toolkit</name>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<description>A set of additional tools for the BASE middleware.</description>
 	<modules>
 		<module>base-tool-gateway</module>

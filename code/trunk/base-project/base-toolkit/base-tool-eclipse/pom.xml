@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-toolkit</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-tool-eclipse</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 	<name>BASE Tool Eclipse</name>
 	<description>An eclipse plug-in that can generate stubs for the BASE middleware.</description>

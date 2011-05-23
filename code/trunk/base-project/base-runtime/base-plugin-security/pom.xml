@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-runtime</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-plugin-security</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>BASE Plugin Security</name>
 	<description>A BASE encryption and key exchange plug-in.</description>
 	<build>

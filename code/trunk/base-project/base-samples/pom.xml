@@ -4,13 +4,13 @@
 	<parent>
 		<artifactId>base-project</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-samples</artifactId>
 	<packaging>pom</packaging>
 	<name>BASE Samples</name>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<description>A set of running samples to demonstrate the use of the BASE middleware.</description>
 	<modules>
 		<module>base-tutorials</module>

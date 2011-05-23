@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: 3PC BASE Tools
 Bundle-SymbolicName: info.pppc.base.eclipse;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1.qualifier
 Bundle-Activator: info.pppc.base.eclipse.Plugin
 Bundle-Vendor: IPVS
 Bundle-Localization: plugin

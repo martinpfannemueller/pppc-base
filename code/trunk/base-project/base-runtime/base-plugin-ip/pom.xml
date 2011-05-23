@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-runtime</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-plugin-ip</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>BASE Plugin IP</name>
 	<description>Platform-specific BASE plug-ins that support IP-based communication.</description>
 	<build>

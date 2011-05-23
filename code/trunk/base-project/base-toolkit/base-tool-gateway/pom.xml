@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-toolkit</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-tool-gateway</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>BASE Tool Gateway</name>
 	<description>A gateway utility application that can be used to route communication between peer-gropus over the internet.</description>
 	<build>
