@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='1'>
+  <artifact classifier='osgi.bundle' id='info.pppc.base.eclipse' version='1.0.0'>
+    <properties size='6'>
+      <property name='artifact.size' value='4037'/>
+      <property name='download.size' value='4037'/>
+      <property name='download.md5' value='9df4645275b5f30f000f61b41a0a7688'/>
+      <property name='maven-groupId' value='info.pppc.base'/>
+      <property name='maven-artifactId' value='base-tool-eclipse'/>
+      <property name='maven-version' value='1.0.0'/>
+    </properties>
+  </artifact>
+</artifacts>

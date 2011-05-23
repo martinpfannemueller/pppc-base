@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>base-samples</artifactId>
+    <groupId>info.pppc.base</groupId>
+    <version>1.0.0</version>
+  </parent>
+  <groupId>info.pppc.base</groupId>
+  <artifactId>base-tutorials</artifactId>
+  <version>1.0.0</version>
+  <name>BASE Tutorials</name>
+  <description>A number of self-contained usage examples for the BASE middleware.</description>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>base-tutorial-emulator</module>
+  	<module>base-tutorial-midlet</module>
+  	<module>base-tutorial-rmi</module>
+  	<module>base-tutorial-security</module>
+  	<module>base-tutorial-serial</module>
+  	<module>base-tutorial-stream</module>
+  	<module>base-tutorial-swt</module>
+  </modules>
+</project> 
