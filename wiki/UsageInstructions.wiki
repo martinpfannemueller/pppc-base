@@ -9,7 +9,10 @@ To simplify the usage of BASE, we are using [http://maven.apache.org/ Maven] to 
 If you are already using Maven to develop your software, the only thing that you need to do is to tell Maven where to get the BASE binaries. To do this, just add the following definitions to your `pom.xml` file.
 
 {{{
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+    http://maven.apache.org/xsd/maven-4.0.0.xsd">
   ...
   <repositories>
     <repository>
