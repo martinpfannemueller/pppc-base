@@ -2,7 +2,7 @@
 
 = Introduction =
 
-I am not a lawyer and I do not want to be one. If there are legal issues with the contents of the repository or the web page, please contact me via marcus.handte@googlemail.com before contacting your lawyer. Without further ado, I will gladly remove whatever is necessary to make you happy. 
+I am not a lawyer and I do not want to be one. If there are legal issues with the contents of the repository or the web page, please contact me via mailto:marcus.handte@googlemail.com before contacting your lawyer. Without further ado, I will gladly remove whatever is necessary to make you happy. 
 
 I have tried to remove all code and as many resources as possible that were not created by me (or someone from my team) but chances are that I have missed something and if there is some artifact created by you, please let me know, so I can remove it from the repository or add the corresponding license to this page.
 
@@ -66,7 +66,7 @@ The CLDC and MIDP stubs - that are used to compile most of the code in such a wa
 
 The Bluecove library - that is used to compile the JSR-82 Bluetooth plug-in and included in the Bluetooth example projects - is - to the best of my knowledge - licensed under [http://bluecove.org/ Apache License, V2].
 
+= Disclaimer =
 
-
-
+The above description may not be correct, so please re-check this to be sure. I am trying to be exact here but I cannot take responsibility for whatever happens if there is a flaw.
 
