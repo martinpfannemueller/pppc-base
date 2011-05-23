@@ -1,0 +1,36 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains an exemplary service that demonstrates 
+application development with BASE. The class that contains the main
+method is RMIMain. The main method shows how to bootstrap a simple
+version of BASE with a set of plug-ins and one service. The application
+itself performs a continuous discovery and tries to find other services
+with the same interface. If it finds other services, it calls the remote
+print function to display a string.
+</p>
+<p>
+Plug-ins are installed by calling the <code>addPlugin(...)</code> method 
+on the <code>PluginManager</code> that is retrieved through the singleton
+instance of the <code>InvocationBroker</code>. The default set of plug-ins
+consists of a semantic plug-in, a serializer plug-in and a transceiver 
+plug-in with a corresponding discovery plug-in.
+</p>
+<p>
+Services are installed by registering them at a local instance of the
+<code>ServiceRegistry</code>. Apart from the service's invocation handler,
+and its exported interfaces, additional properties can be specified to 
+describe the service in more detail.
+</p>
+<p>
+The skeleton and proxy for the service can be generated automatically 
+using the BASE eclipse plug-in. To generate these stubs, select the
+desired interface and right-click it in the package explorer. From
+the "3PC Base Tools" menu select "Generate Stubs". This will create
+a "<Interface>Proxy.java" and "<Interface>Skeleton.java" file in the
+same package.
+</p>
+</body>
+<html>

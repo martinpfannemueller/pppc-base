@@ -1,0 +1,50 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains the base swt user interface. This user
+interface is intended for desktop pcs and pocket pcs. The
+main class of the user interface is called application. It
+can be started by calling the static get instance method in
+the base ui class. This will spawn a new user interface thread 
+and it will initialize the invocation broker.
+</p>
+<p>
+The application supports two types of extensions, namely
+actions and element controls. Actions are added using the
+add/remove contribution methods of the application. Elements
+are added using the add/remove/focus element methods.
+</p>
+<p>
+Actions are shown as menu items in the system menu in the order 
+in which they have been added to the application. Using actions, 
+elements can be created and added on demand.
+</p>
+<p>
+Elements are added as tabs. A user can chose the tab that he
+wants to focus. Using the focus element method, the focus can
+also be put manually onto a certain element. Each element
+has its own menu that is brought up whenever the element is 
+focused. The menu is called view and it is shown together with
+the system menu that contains the actions that are always available.
+</p>
+<p>
+The base swt ui provides a small set of simple debugging tools. 
+These tools can be added by adding the corresponding action to the
+system menu. The action that enables these tools is called system
+action. A simple way to add the action to the current application
+is to call the register system browser method in the base ui class.
+Adding this action will enable the user to bring up the
+so-called system browser. 
+</p>
+<p>
+Using the system browser, a user can see the devices that are currently 
+available. If a device is equipped with a base service registry, the 
+user can right-click the device and bring up the service registry 
+browser. Using this browser, the user can create and execute queries. 
+Additionally, the user can create simple invocations manually and he can
+transmit them to some service.
+</p>
+</body>
+<html> 

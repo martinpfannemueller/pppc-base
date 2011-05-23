@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:orientation="vertical">
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent">
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:text="@string/device_name"
+			android:textSize="6.5pt" android:layout_weight="5" android:layout_gravity="right"></TextView>
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:text="TextView"
+			android:layout_weight="2" android:id="@+id/deviceName"
+			android:textSize="6.5pt" android:layout_gravity="center"></TextView>
+	</LinearLayout>
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent">
+		<TextView android:layout_height="wrap_content" android:text="@string/device_id"
+			android:textSize="6.5pt" android:layout_width="fill_parent"
+			android:layout_weight="5" android:layout_gravity="right"></TextView>
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:text="TextView"
+			android:id="@+id/deviceIdentifier" android:textSize="6.5pt"
+			android:layout_weight="2" android:layout_gravity="center"></TextView>
+	</LinearLayout>
+</LinearLayout>

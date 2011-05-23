@@ -1,0 +1,23 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains an exemplary service that demonstrates 
+application development with BASE. The class that contains the main
+method is StreamMain. The main method shows how to bootstrap a simple
+version of BASE with a set of plug-ins and one service. The application
+itself performs a continuous discovery and tries to find other services
+with the same interface. 
+</p>
+<p>
+In contrast to the RMI example, the stream example shows the streaming
+interface that enables applications to establish low-level connections.
+To do this, the service must declare the IStreamHandler interface. When
+detecting this interface, the BASE Eclipse plug-in will generate a 
+proxy with special code to initiate a connection. Note that the 
+connection establishment requires an appropriate streaming plug-in
+which needs to be installed on all interacting systems. 
+</p>
+</body>
+<html>

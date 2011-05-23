@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_height="fill_parent"
+	android:layout_width="fill_parent">
+	<TextView android:text="@string/service_status" android:textStyle="bold"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:textSize="6.5pt" android:gravity="center" android:paddingTop="10px"></TextView>
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:orientation="horizontal">
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:text="@string/broker"
+			android:layout_weight="1.0" android:textSize="6.5pt" android:gravity="right"></TextView>
+		<TextView android:text="TextView" android:id="@+id/brokerStatus"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_weight="1.0" android:textSize="6.5pt" android:gravity="center"></TextView>
+	</LinearLayout>
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:orientation="horizontal">
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:text="@string/plugin_wifi"
+			android:layout_weight="1.0" android:textSize="6.5pt" android:gravity="right"></TextView>
+		<TextView android:text="TextView" android:id="@+id/wifiStatus"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_weight="1.0" android:textSize="6.5pt" android:gravity="center"></TextView>
+	</LinearLayout>
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:orientation="horizontal">
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:text="@string/plugin_bluetooth"
+			android:layout_weight="1.0" android:textSize="6.5pt" android:gravity="right"></TextView>
+		<TextView android:text="TextView" android:id="@+id/bluetoothStatus"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_weight="1.0" android:textSize="6.5pt" android:gravity="center"></TextView>
+	</LinearLayout>
+	<TextView android:text="@string/device_list" android:textStyle="bold"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:textSize="6.5pt" android:gravity="center" android:paddingTop="10px"></TextView>
+	<ListView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:id="@+id/deviceList" android:layout_weight="1"></ListView>
+
+
+</LinearLayout>

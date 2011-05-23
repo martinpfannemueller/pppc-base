@@ -1,0 +1,40 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains a custom widget toolkit. The
+toolkit is a drop in replacement for the lcdui
+toolkit contained in the midlet profile. We use this
+toolkit instead of the original version since the
+implementation on the Nokia S60 series contains
+lots of bugs.
+</p>
+<p>
+The toolkit itself is intended to be single threaded,
+however, as we cannot control the threading used by
+the underlying toolkit implementation, some methods
+(such as the paint method) might be called from a 
+non-gui thread. Thus, all items should synchronize on
+the global ui lock whenever the internal state is
+manipulated. 
+</p>
+<p>
+The display thread can be created and retrieved through
+the form display. The form display enables synchronous
+and asynchronous postings of events. The form is the
+main class that provides a layout algorithm and a repaint
+handler for the items (i.e. widgets) contained on the
+form.
+</p>
+<p>
+Commands and key events are always posted to items using
+the ui thread. Thus, whenever a command or key event is
+handled, all other gui operations are blocked. Since the
+threading of the underlying implementation cannot be 
+controlled, this does not mean that other methods are 
+also not called. Especially the repaint method may be
+called at any point in time. 
+</p>
+</body>
+<html> 

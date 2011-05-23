@@ -1,0 +1,28 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains an simple example for object serialization in
+BASE. Similar to the RMI example, this example defines a service 
+that is exported via the registry. The service is defined as SerialService.
+Instead of using a string in the print method, the interface of the
+service uses a user defined object called SerialObject.
+</p>
+<p>
+To enable object serialization, each serializable object must implement
+the ISerializable interface defined in the io package of the BASE core.
+In addition, it needs to provide a public default constructor. When
+implementing ISerializable, the developer must provide a readObject and
+a writeObject method that read/write the internal state of the object to
+the passed input and output streams. This is very similar to Java
+serialization, however, it must be done explicitly since access to
+internal fields is not possible on small devices.  
+</p>
+<p>
+For more details on serialization read the documentation provided by
+the object input and output streams in the io package of the BASE
+core.
+</p>
+</body>
+<html>

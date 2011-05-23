@@ -1,0 +1,128 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains the BASE plug-in framework. The framework 
+is used to write communication plug-ins. Each plug-in inherits 
+indirectly from the plug-in interface. Depending on its functionality, 
+it implements either the discovery, the modifier, the transceiver, 
+the discovery, the routing or the semantic interface. Each of these 
+interfaces has a corresponding manager interface that provides the plug-in 
+with a functionality-specific view on the local plug-in manager 
+that controls the plug-in.
+</p>
+<p>
+The plug-in framework defines different layers for plug-ins.
+At the lowest layer are the transceiver plug-ins. They are used
+to send a number of bytes to a remote device. To do this, they
+provide two types of connectors. A connector is a base equivalent
+of a socket. The first type of connectors are packet connectors.
+The provide a local broadcast of packets. These packets are 
+limited in size and they are delivered unreliably. The semantics
+of packets is similar to UDP broadcasts. The second type of 
+connectors provides connection-oriented reliable unicast 
+communication (i.e. similar to a TCP connection). 
+</p>
+<p>
+At the next layer, there are the so-called routing plug-ins. Similar
+to transceivers, they are responsible for opening connections. 
+However, the connections supported by routing plug-ins are typically
+not direct connections but multi-hop connections. To create these
+connections, routing plug-ins must perform some form of route
+discovery. This can be done either proactively or reactively.
+</p>
+<p>
+At the next layer, there are the so-called modifiers. These 
+plug-ins transform byte streams into byte streams. Possible
+plug-in types are compression plug-ins, security plug-ins that
+perform encryption or buffering plug-ins. Such plug-ins implement
+the modifier interface and they define the type of extension
+through their plug-in description.
+</p>
+<p>
+At the next layer, there are the so-called serializer plug-ins.
+These plug-ins transform java objects into byte streams. The
+streams that they provide must adhere to the object input and
+object output interface defined in the base io framework.
+</p>
+<p>
+At the highest layer, there are the so-called semantic plug-ins.
+These plug-ins are responsible for implementing a certain
+communication semantic. They handle tasks such as deciding
+whether a certain message should be retransmitted. To do this,
+they make use of the invocation tables contained in the
+invocation broker. Thus, in order to implement such a plug-in
+a developer should have a clear understanding of the inner
+workings of the invocation broker.
+</p>
+<p>
+If the plug-in manager receives an invocation that should be
+transmitted to some remote device, it first tries to find
+a suitable semantic plug-in. If it has found a semantic plug-in
+it will ask the plug-in whether it is capable of delivering
+the invocation using the plugin's prepare method. If the
+plug-in accepts the invocation it will receive a so-called
+session data object. Using this session object, the semantic
+plug-in can request the composition of a stack that is capable
+to communicate with another plug-in. Thereby, the plug-in can
+specify its requirements using the non-functional collection of the
+invocation. It can, for instance, demand that a serializer
+is required and that compression should be used.
+</p>
+<p>
+In response to a open session call, the plug-in manager will
+compose a stack. Thereby, it will always first call the
+plugin's prepare method, where the plug-in can decide to
+accept or reject the call. Furthermore, the plug-in can
+refine the requirements contained in the non-functional collection.
+A serializer can for instance demand that there should be
+a certain type of compression. This composition works 
+top down (i.e. starting at the serializer across different
+modifiers until a transceiver has been added).
+</p>
+<p>
+Apart from modifying the non-functional parameters, a plug-in 
+can also store some data in the session object that it might need
+to have whenever the stack is composed. The data that can
+be stored is divided into local and remote data. The local
+data can only be used when the stack is opened locally,
+the remote data is transmitted to the remote device. A
+typical use of the session data would for instance be that
+a java.net-based transceiver could store the remote IP 
+address of a plug-in in its local session data. If the 
+session is opened, it simply retrieves the IP and opens
+the connection. A usage of the remote session would for
+instance be to store an index for a certain compression
+algorithm or compression factor that will be used by
+the local compression plug-in upon sending.
+</p>
+<p>
+If the plug-in manager has found a complete stack that is
+also available on the remote device, it will call the
+open methods on all plug-ins starting bottom up (i.e. at
+the transceiver). Thereby it will connect the transceivers
+in such a way that they can communicate without additional
+calls to the plug-in manager.
+</p>
+<p>
+In order to define global device-specific composition
+policies, a developer can create a custom session strategy.
+This strategy can be passed to the plug-in manager. The
+strategy can prioritize different plug-in types or it can
+decide not to use a certain type of plug-in. One session
+strategy that tries to minimize energy consumption could,
+for instance, decide to use IR over Bluetooth over WLAN.
+</p>
+<p>
+Orthogonal to all other plug-in layers, the plug-in
+framework defines the so-called discovery plug-ins. These
+plug-ins are responsible to distribute the plug-in and 
+device descriptions using transceiver plug-ins. To this
+end, they get notifications whenever a transceiver is
+added or removed, enabled or disabled. Using their manager
+they can add plug-in and device descriptions to the local
+device registry with or without a certain time to live.
+</p>
+</body>
+<html> 
