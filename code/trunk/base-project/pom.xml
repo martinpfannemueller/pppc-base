@@ -21,6 +21,7 @@
 		<java.cdc.path>${settings.localRepository}/com/github/mcpat/apistubs/cdc-1.1.2-stub/1.0/cdc-1.1.2-stub-1.0.jar</java.cdc.path>
 		<java.midp.path>${settings.localRepository}/com/github/mcpat/apistubs/midp-2.0-stub/1.0/midp-2.0-stub-1.0.jar</java.midp.path>
 		<java.bouncycastle.path>${settings.localRepository}/org/bouncycastle/bouncycastle-lightweight-api/1.46/bouncycastle-lightweight-api-1.46.jar</java.bouncycastle.path>
+		<java.sunspot.path>${sunspot.sdk.path}/lib/squawk_device.jar${path.separator}${sunspot.sdk.path}/lib/spotlib_device.jar${path.separator}${sunspot.sdk.path}/lib/transducer_device.jar${path.separator}${sunspot.sdk.path}/lib/multihop_common.jar${path.separator}${sunspot.sdk.path}/lib/spotlib_common.jar</java.sunspot.path>
 		<!-- Use settings.xml to reference SunSPOT SDK (tested with yellow) -->
 		<sunspot.sdk.path>C:/Sunspot</sunspot.sdk.path>
 		<!-- Use settings.xml to reference Android SDK (tested with 2.1-r1) -->
