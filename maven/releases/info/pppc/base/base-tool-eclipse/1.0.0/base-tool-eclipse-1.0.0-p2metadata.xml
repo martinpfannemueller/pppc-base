@@ -29,7 +29,7 @@
     <touchpointData size='1'>
       <instructions size='1'>
         <instruction key='manifest'>
-          Bundle-Name: 3PC BASE Tools&#xA;Bundle-Version: 1.0.0&#xA;Eclipse-LazyStart: true&#xA;Bundle-Activator: info.pppc.base.eclipse.Plugin&#xA;Created-By: Apache Maven&#xA;Bundle-Vendor: IPVS&#xA;Archiver-Version: Plexus Archiver&#xA;Require-Bundle: org.eclipse.core.resources,org.eclipse.jdt.core,org.eclipse.core.runtime,org.eclipse.ui,org.eclipse.jdt.ui&#xA;Bundle-SymbolicName: info.pppc.base.eclipse;singleton:=true&#xA;Built-By: Mac&#xA;Manifest-Version: 1.0&#xA;Build-Jdk: 1.6.0_24&#xA;Bundle-ManifestVersion: 2&#xA;Bundle-Localization: plugin&#xA;
+          Bundle-Name: 3PC BASE Tools&#xA;Bundle-Version: 1.0.0&#xA;Eclipse-LazyStart: true&#xA;Bundle-Activator: info.pppc.base.eclipse.Plugin&#xA;Created-By: Apache Maven&#xA;Bundle-Vendor: IPVS&#xA;Archiver-Version: Plexus Archiver&#xA;Require-Bundle: org.eclipse.core.resources,org.eclipse.jdt.core,org.eclipse.core.runtime,org.eclipse.ui,org.eclipse.jdt.ui&#xA;Bundle-SymbolicName: info.pppc.base.eclipse;singleton:=true&#xA;Built-By: Mac&#xA;Manifest-Version: 1.0&#xA;Build-Jdk: 1.6.0_25&#xA;Bundle-ManifestVersion: 2&#xA;Bundle-Localization: plugin&#xA;
         </instruction>
       </instructions>
     </touchpointData>

@@ -3,9 +3,9 @@
 <artifacts size='1'>
   <artifact classifier='osgi.bundle' id='info.pppc.base.eclipse' version='1.0.0'>
     <properties size='6'>
-      <property name='artifact.size' value='4037'/>
-      <property name='download.size' value='4037'/>
-      <property name='download.md5' value='9df4645275b5f30f000f61b41a0a7688'/>
+      <property name='artifact.size' value='33401'/>
+      <property name='download.size' value='33401'/>
+      <property name='download.md5' value='0420e1eb1f2518cd643ea571ca5799ee'/>
       <property name='maven-groupId' value='info.pppc.base'/>
       <property name='maven-artifactId' value='base-tool-eclipse'/>
       <property name='maven-version' value='1.0.0'/>
