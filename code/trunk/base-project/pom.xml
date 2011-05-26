@@ -27,15 +27,6 @@
 		<android.sdk.path>C:/Android</android.sdk.path>
 	</properties>
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-reactor-plugin</artifactId>
-					<version>1.0</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
 			<plugin>
 				<!-- Set the compiler plugin version. -->
