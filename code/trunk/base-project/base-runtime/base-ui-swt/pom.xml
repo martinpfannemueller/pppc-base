@@ -34,20 +34,6 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>base-plugin-common</artifactId>
-			<version>${project.version}</version>
-			<type>jar</type>
-			<scope>compile</scope>		
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>base-plugin-ip</artifactId>
-			<version>${project.version}</version>
-			<type>jar</type>
-			<scope>compile</scope>		
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
 			<artifactId>base-extension-service</artifactId>
 			<version>${project.version}</version>
 			<type>jar</type>
