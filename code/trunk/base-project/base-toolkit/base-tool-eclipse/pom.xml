@@ -66,10 +66,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<!-- Replaced helios site with (not much) faster mirror site. -->
-	<!-- <url>http://download.eclipse.org/releases/helios</url> -->
-
-	<!-- <repositories> <repository> <id>helios.eclipse.org</id> <layout>p2</layout> 
-		<url>http://ftp.halifax.rwth-aachen.de/eclipse/releases/helios/</url> </repository> 
-		</repositories> -->
 </project>
