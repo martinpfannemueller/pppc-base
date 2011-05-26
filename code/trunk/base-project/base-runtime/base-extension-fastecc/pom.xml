@@ -58,10 +58,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.sun.spot</groupId>
-			<artifactId>spotlib_common</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${sunspot.sdk.path}/lib/SSL_device.jar</systemPath>
+			<artifactId>ssl_device</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.github.mcpat.apistubs</groupId>

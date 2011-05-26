@@ -21,7 +21,7 @@
 					<source>1.3</source>
 					<target>1.1</target>
 					<compilerArguments>
-						<bootclasspath>${java.cldc.path}</bootclasspath>
+						<bootclasspath>${java.sunspot.path}</bootclasspath>
 					</compilerArguments>
 				</configuration>
 			</plugin>

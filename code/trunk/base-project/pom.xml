@@ -207,6 +207,14 @@
 				<scope>system</scope>
 				<systemPath>${sunspot.sdk.path}/lib/squawk_device.jar</systemPath>
 			</dependency>
+			<dependency>
+				<!-- Efficient ECC for special curves. -->
+				<groupId>com.sun.spot</groupId>
+				<artifactId>ssl_device</artifactId>
+				<version>1.0</version>
+				<scope>system</scope>
+				<systemPath>${sunspot.sdk.path}/lib/SSL_device.jar</systemPath>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<distributionManagement>
