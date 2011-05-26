@@ -1,0 +1,20 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+The notes below are probably only useful for me but as I know that I will not remember the specific details of the solutions below, I rather write them down. 
+
+= Eclipse Updatee Site vs. Tycho =
+
+Tycho relies on P2 repositories. Thus, it requires a proper version of artifacts.xml and contents.xml on the update site. This command line can generate the two files from a local copy of the update site:
+
+{{{
+java -jar C:/Progra~1/Java/Eclipse*/org.eclipse.equinox.launcher_*.jar 
+  -application org.eclipse.equinox.p2.publisher.FeaturesAndBundlesPublisher 
+  -metadataRepository file:///c:/sitecopy 
+  -artifactRepository file:///c:/sitecopy
+  -source c:/sitecopy 
+  -publishArtifacts
+}}}
+
+Once the metadata is updated, it is *important to clear out the cache* in the local maven repository. Otherwise, the problem persists.
