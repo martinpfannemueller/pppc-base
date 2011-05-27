@@ -516,18 +516,24 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 			// bring this device into discoverable mode
 			if (adapter == null) {
 				Logging.log(getClass(), "Bluetooth adapter not available.");
+				monitor.done();
+				setEnabled(false);
 				return;
 			}
 			if (!adapter.isEnabled()) {
 			   // Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			   // startActivityForResult(enableBtIntent, 2);
 				Logging.log(getClass(), "Bluetooth adapter not enabled.");
+				monitor.done();
+				setEnabled(false);
 				return;
 			}			
 			server = adapter.listenUsingRfcommWithServiceRecord(getID(sysid), PLUGIN_UUID);
 			// start discovery operation		
 			// manager.performOperation(new DiscoveryOperation(), discoveryMonitor);		
 		} catch (IOException e) {
+			monitor.done();
+			setEnabled(false);
 			Logging.error(getClass(), "Exception in bluetooth setup, thread stopped.", e);
 			throw e;	
 		}
