@@ -2,9 +2,9 @@
 
 = Introduction =
 
-I am not a lawyer and I do not want to be one. If there are legal issues with the contents of the repository or the web page, please contact me via mailto:marcus.handte@googlemail.com before contacting your lawyer. Without further ado, I will gladly remove whatever is necessary to make you happy. 
+If there are legal issues with the contents of the repository or the web page, please contact me via <a href="mailto:marcus.handte@googlemail.com">email</a> before contacting your lawyer. Without further ado, we will gladly remove whatever is necessary to make you happy. 
 
-I have tried to remove all code and as many resources as possible that were not created by me (or someone from my team) but chances are that I have missed something and if there is some artifact created by you, please let me know, so I can remove it from the repository or add the corresponding license to this page.
+We have tried to remove all code and as many resources as possible that were not created by someone from the team but chances are that we have missed something and if there is some artifact created by you, please let us know, so we can remove it from the repository or add the corresponding license to this page.
 
 = The Intention =
 
@@ -56,16 +56,16 @@ Furthermore, this also does not apply to the code that you can find in the vendo
 
 = Other Licenses =
 
-As stated previously, the image resources contained in the swt and lcdui packages are adapted icons from the Eclipse distribution which is - to the best of my knowledge - distributed under the [http://www.eclipse.org/legal/epl-v10.html Eclipse Public License].
+As stated previously, the image resources contained in the swt and lcdui packages are adapted icons from the Eclipse distribution which is - to the best of our knowledge - distributed under the [http://www.eclipse.org/legal/epl-v10.html Eclipse Public License].
 
-The bouncycastle code is - to the best of my knowledge - distributed under an [http://www.bouncycastle.org/licence.html MIT X11 License] but apparently, there are also patents on some of the algortihms in case they are used in commercial products.
+The bouncycastle code is - to the best of our knowledge - distributed under an [http://www.bouncycastle.org/licence.html MIT X11 License] but apparently, there are also patents on some of the algortihms in case they are used in commercial products.
 
-The SunSPOT libraries - to which the SunSPOT related subprojects including the fastecc extension are linking - are - to the best of my knowledge - licensed under the [http://java.net/projects/spots-network-library/ GNU Public License V2]. Consequently, you might not be able to use them in a commerical closed source application - but again, I am not lawyer.
+The SunSPOT libraries - to which the SunSPOT related subprojects including the fastecc extension are linking - are - to the best of our knowledge - licensed under the [http://java.net/projects/spots-network-library/ GNU Public License V2]. Consequently, you might not be able to use them in a commerical closed source application.
 
-The CLDC and MIDP stubs - that are used to compile most of the code in such a way that it executes everywhere - are - to the best of my knowledge - licensed under the [http://mcpat.github.com/java-microedition-libraries/ GNU Lesser Public License V3.0].
+The CLDC and MIDP stubs - that are used to compile most of the code in such a way that it executes everywhere - are - to the best of our knowledge - licensed under the [http://mcpat.github.com/java-microedition-libraries/ GNU Lesser Public License V3.0].
 
-The Bluecove library - that is used to compile the JSR-82 Bluetooth plug-in and included in the Bluetooth example projects - is - to the best of my knowledge - licensed under [http://bluecove.org/ Apache License, V2].
+The Bluecove library - that is used to compile the JSR-82 Bluetooth plug-in and included in the Bluetooth example projects - is - to the best of our knowledge - licensed under [http://bluecove.org/ Apache License, V2].
 
 = Disclaimer =
 
-The above description may not be correct, so please re-check this to be sure. I am trying to be exact here but I cannot take responsibility for whatever happens if there is a flaw.
+The above description may not be correct, so please re-check this to be sure. We are trying to be exact here but we cannot take responsibility for whatever happens if there is a flaw.
