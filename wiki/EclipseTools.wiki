@@ -22,4 +22,4 @@ Once the Eclipse plug-in is installed, you can generate proxies and skeletons fr
 http://pppc-base.googlecode.com/svn/wiki/images/eclipseusage.png
 <p align=center>*Figure 2: Eclipse Plug-in Usage</p>
 
-Note that each type of stub object can be generated in a normal and a secure variant. The secure variant introduces a dependency to the *BASE Security* project. A generated secure proxy automatically enforces authentic and secret communication. A generated secure skeleton can be used to verify the source of a call and to determine whether the interaction has been encrypted.
+Note that each type of stub object can be generated in a normal and a secure variant. The secure variant introduces a dependency to the *base-core-security* project. A generated secure proxy automatically enforces authentic and secret communication. A generated secure skeleton can be used to verify the source of a call and to determine whether the interaction has been encrypted.
