@@ -1,6 +1,5 @@
 package info.pppc.basex.plugin.transceiver;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -57,7 +56,7 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 	 * @author Marcus Handte
 	 */
 	public class PacketConnector implements IPacketConnector, IListener {
-
+ 
 		/**
 		 * A flag that indicates whether the packet connector
 		 * has been released already. If this flag is true,
@@ -505,14 +504,6 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 	 */
 	public void perform(IMonitor monitor) throws Exception {
 		try {
-			// create a data element that contains the system id
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			SystemID.SYSTEM.writeObject(oos);
-			oos.flush(); 
-			oos.close();
-			byte[] sysid = bos.toByteArray();
-			//DataElement element = new DataElement(DataElement.STRING, new String(sysid));
 			// bring this device into discoverable mode
 			if (adapter == null) {
 				Logging.log(getClass(), "Bluetooth adapter not available.");
@@ -528,7 +519,7 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 				setEnabled(false);
 				return;
 			}			
-			server = adapter.listenUsingRfcommWithServiceRecord(getID(sysid), PLUGIN_UUID);
+			server = adapter.listenUsingRfcommWithServiceRecord("BASE", PLUGIN_UUID);
 			// start discovery operation		
 			// manager.performOperation(new DiscoveryOperation(), discoveryMonitor);		
 		} catch (IOException e) {
@@ -542,13 +533,19 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 			BluetoothSocket connection = null;
 			try {
 				connection = server.accept(10000);
-				Logging.debug(getClass(), "Accepted incoming from " + connection.getRemoteDevice().getAddress() + ".");
+				String device = connection.getRemoteDevice().getAddress().toUpperCase();
+				Logging.debug(getClass(), "Accepted incoming from " + device + ".");
 				InputStream is = connection.getInputStream();
 				OutputStream os = connection.getOutputStream();
 				ObjectInputStream ois = new ObjectInputStream(is);
 				SystemID remote = (SystemID)ois.readObject();
+				String remoteDevice = ois.readUTF().toUpperCase();
 				ObjectOutputStream oos = new ObjectOutputStream(os);
 				oos.writeObject(SystemID.SYSTEM);
+				oos.writeUTF(adapter.getAddress().toUpperCase());
+				if (! remoteDevice.equals(device)) {
+					Logging.debug(getClass(), "Missmatch in local and remote device (" + device + " vs. " + remoteDevice + ").");
+				}
 				synchronized (this) {
 					if (multiplexers.get(remote) == null) {
 						Logging.debug(getClass(), "Connected to system " + remote + ".");
@@ -594,8 +591,10 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 						OutputStream os = bs.getOutputStream();
 						ObjectOutputStream oos = new ObjectOutputStream(os);
 						oos.writeObject(SystemID.SYSTEM);
+						oos.writeObject(adapter.getAddress().toUpperCase());
 						ObjectInputStream ois = new ObjectInputStream(is);
 						SystemID remote = (SystemID)ois.readObject();
+						String remoteDevice = ois.readUTF().toUpperCase();
 						synchronized (this) {
 							if (multiplexers.get(remote) == null) {
 								MultiplexFactory f = new MultiplexFactory(MxBluetoothTransceiver.this, is, os, true);
@@ -607,7 +606,7 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 										IPacketConnector ic = f.openConnector(DEFAULT_GROUP);
 										c.addConnector(ic);
 									} catch (IOException x) {
-										Logging.error(getClass(), "Could not open packet connector.", x);	
+										Logging.error(getClass(), "Could not open packet connector (" + remoteDevice + ").", x);	
 									}	
 								}
 							} else {
@@ -744,25 +743,6 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 	 */
 	private synchronized void release(IPacketConnector connector) {
 		packets.removeElement(connector);		
-	}
-	
-	/**
-	 * This is a dirty helper method that is used to encode the system
-	 * id as string.
-	 * 
-	 * @param id The system id as bytes.
-	 * @return The system id as string.
-	 */
-	private static String getID(byte[] id) {
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i < id.length; i++) {
-			byte b = id[i];
-			int high = ((b & 0xF0) >> 4);
-			int low = (b & 0x0F);
-			buffer.append((char)(high + 65));
-			buffer.append((char)(low + 65));
-		}
-		return buffer.toString();
 	}
 
 }

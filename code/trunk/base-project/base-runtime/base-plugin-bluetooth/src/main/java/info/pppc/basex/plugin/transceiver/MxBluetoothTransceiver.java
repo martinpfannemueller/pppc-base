@@ -24,8 +24,6 @@ import info.pppc.base.system.util.Logging;
 import info.pppc.basex.plugin.util.IMultiplexPlugin;
 import info.pppc.basex.plugin.util.MultiplexFactory;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,7 +32,6 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import javax.bluetooth.BluetoothStateException;
-import javax.bluetooth.DataElement;
 import javax.bluetooth.DeviceClass;
 import javax.bluetooth.DiscoveryAgent;
 import javax.bluetooth.DiscoveryListener;
@@ -277,6 +274,55 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 		}
 		
 	}
+	
+	/**
+	 * A connector entry that maps connections to their respective
+	 * bluetooth device id.
+	 * 
+	 * @author Mac
+	 */
+	public class Connection {
+		/**
+		 * The connector that represents the connection.
+		 */
+		protected StreamConnection stream;
+		/**
+		 * The bluetooth device id of the connection.
+		 */
+		protected String device;
+		
+		/**
+		 * Creates a new connection entry with the given device
+		 * and connection.
+		 * 
+		 * @param device The device id.
+		 * @param stream The actual connection.
+		 */
+		public Connection(String device, StreamConnection stream) {
+			this.device = device;
+			this.stream = stream;
+		}
+		
+		/**
+		 * Returns the stream.
+		 * 
+		 * @return The stream.
+		 */
+		public StreamConnection getStream() {
+			return stream;
+		}
+		
+		/**
+		 * Returns the device id.
+		 * 
+		 * @return The device id.
+		 */
+		public String getDevice() {
+			return device;
+		}
+		
+	}
+	
 
 	/**
 	 * The discovery process supports service and device discovery.
@@ -389,48 +435,43 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 						}
 						Logging.debug(getClass(), "Bluetooth services found: " + services.size());
 						// check whether services need to be opened
-						for (int i = 0, s = services.size(); i < s; i++) {
+						services: for (int i = 0, s = services.size(); i < s; i++) {
 							try {
 								ServiceRecord service = (ServiceRecord)services.elementAt(0);
 								services.removeElementAt(0);						
-								DataElement element = service.getAttributeValue(ATTRIBUTE_ID);
-								if (element == null) {
-									continue;						
-								}
-								String sysid = (String)element.getValue();
-								ByteArrayInputStream bis = 
-									new ByteArrayInputStream(getID(sysid));
-								ObjectInputStream ois = new ObjectInputStream(bis);
-								SystemID id = new SystemID();
-								id.readObject(ois);
+								String device = service.getHostDevice().getBluetoothAddress().toUpperCase();
 								synchronized (MxBluetoothTransceiver.this) {
-									if (multiplexers.get(id) != null) {
-										continue;
+									Enumeration e = connectors.elements();
+									while (e.hasMoreElements()) {
+										Connection c = (Connection)e.nextElement();
+										if (c != null && device.equals(c.getDevice())) {
+											continue services;
+										}
 									}
 								}
-								Logging.debug(getClass(), "Opening bluetooth connection to system " + id + ".");
-								String url = service.getConnectionURL
-									(ServiceRecord.AUTHENTICATE_ENCRYPT, secure);
+								Logging.debug(getClass(), "Opening bluetooth connection to system " + device + ".");
+								String url = service.getConnectionURL(ServiceRecord.AUTHENTICATE_ENCRYPT, secure);
 								StreamConnection connection = (StreamConnection)Connector.open(url);
 								InputStream is = connection.openInputStream();
 								OutputStream os = connection.openOutputStream();
 								ObjectOutputStream oos = new ObjectOutputStream(os);
 								oos.writeObject(SystemID.SYSTEM);
+								oos.writeUTF(local.getBluetoothAddress().toUpperCase());
 								oos.flush();
 								// cross validation
 								ObjectInputStream vois = new ObjectInputStream(is);
-								SystemID validate = (SystemID)vois.readObject();
-								if (! validate.equals(id)) {
-									connection.close();
-									Logging.debug(getClass(), "System id missmatch, expecting " + id + " found " + validate + ".");
-									continue;
-								}									
+								SystemID id = (SystemID)vois.readObject();
+								String remoteDevice = vois.readUTF().toUpperCase();
+								if (! remoteDevice.equals(device)) {
+									Logging.debug(getClass(), "Missmatch in local and remote device (" + device + " vs. " + remoteDevice + ").");
+								}
 								Logging.debug(getClass(), "Bluetooth connection to system " + id + " established.");
 								synchronized (MxBluetoothTransceiver.this) {
 									if (multiplexers.get(id) == null) {
 										MultiplexFactory f = new MultiplexFactory(MxBluetoothTransceiver.this, is, os, true);
 										multiplexers.put(id, f);
-										connectors.put(f, connection);
+										Connection con = new Connection(device, connection);
+										connectors.put(f, con);
 										for (int ip = 0, sp = packets.size(); ip < sp; ip++) {
 											PacketConnector c = (PacketConnector)packets.elementAt(ip);
 											try {
@@ -820,24 +861,18 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 	public void perform(IMonitor monitor) throws Exception {
 		// create a monitor for the discovery thread
 		final NullMonitor discoveryMonitor = new NullMonitor();
+		final String device;
 		try {
-			// create a data element that contains the system id
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			SystemID.SYSTEM.writeObject(oos);
-			oos.flush();
-			oos.close();
-			byte[] sysid = bos.toByteArray();
-			//DataElement element = new DataElement(DataElement.STRING, new String(sysid));
 			// bring this device into discoverable mode
 			final LocalDevice local = LocalDevice.getLocalDevice();
+			device = local.getBluetoothAddress().toUpperCase();
 			if (! local.setDiscoverable(DiscoveryAgent.GIAC)) {
 				Logging.debug(getClass(), "Bluetooth initialization state unknown.");	
 			}
 			// prepare connection notifier and announce system id
 			StringBuffer url = new StringBuffer("btspp://localhost:");
 			url.append(PLUGIN_UUID.toString());
-			url.append(";name=" + getID(sysid));
+			url.append(";name=BASE");
 			if (secure) {
 				url.append(";authenticate=true;encrypt=true");				
 			} else {
@@ -859,14 +894,16 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 				OutputStream os = connection.openOutputStream();
 				ObjectInputStream ois = new ObjectInputStream(is);
 				SystemID remote = (SystemID)ois.readObject();
+				String remoteDevice = ois.readUTF().toUpperCase();
 				ObjectOutputStream oos = new ObjectOutputStream(os);
 				oos.writeObject(SystemID.SYSTEM);
+				oos.writeUTF(device);
 				Logging.debug(getClass(), "Incoming bluetooth connection from system " + remote + ".");
 				synchronized (this) {
 					if (multiplexers.get(remote) == null) {
 						MultiplexFactory f = new MultiplexFactory(this, is, os, true);
 						multiplexers.put(remote, f);
-						connectors.put(f, connection);
+						connectors.put(f, new Connection(remoteDevice, connection));
 						for (int i = 0, s = packets.size(); i < s; i++) {
 							PacketConnector c = (PacketConnector)packets.elementAt(i);
 							try {
@@ -913,10 +950,10 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 	 * @param multiplexer The multiplexer that has been closed.
 	 */
 	public synchronized void closeMultiplexer(MultiplexFactory multiplexer) {
-		StreamConnection c = (StreamConnection)connectors.remove(multiplexer);
-		if (c != null) {
+		Connection c = (Connection)connectors.remove(multiplexer);
+		if (c != null && c.getStream() != null) {
 			try {
-				c.close();	
+				c.getStream().close();	
 			} catch (IOException e) {
 				Logging.debug
 					(getClass(), "Exception while closing stream connection.");	
@@ -991,10 +1028,10 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 		// remove remaining multiplexers, if any
 		Enumeration e = connectors.elements();
 		while (e.hasMoreElements()) {
-			StreamConnection s = (StreamConnection)e.nextElement();
-			if (s != null) {
+			Connection s = (Connection)e.nextElement();
+			if (s != null && s.getStream() != null) {
 				try {
-					s.close();	
+					s.getStream().close();	
 				} catch (IOException ex) {
 					Logging.debug(getClass(), "Could not close connection properly.");	
 				}
@@ -1010,42 +1047,6 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 	 */
 	private synchronized void release(IPacketConnector connector) {
 		packets.removeElement(connector);		
-	}
-	
-	/**
-	 * This is a dirty helper method that is used to encode the system
-	 * id as string.
-	 * 
-	 * @param id The system id as bytes.
-	 * @return The system id as string.
-	 */
-	private static String getID(byte[] id) {
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i < id.length; i++) {
-			byte b = id[i];
-			int high = ((b & 0xF0) >> 4);
-			int low = (b & 0x0F);
-			buffer.append((char)(high + 65));
-			buffer.append((char)(low + 65));
-		}
-		return buffer.toString();
-	}
-	
-	/**
-	 * This is a dirty helper method that is used to encode the system
-	 * id as string.
-	 * 
-	 * @param id The string version of the system id.
-	 * @return The bytes of the system id.
-	 */
-	private static byte[] getID(String id) {
-		byte[] bytes = new byte[id.length() / 2];
-		for (int i = 0; i < id.length(); i += 2) {
-			char high = id.charAt(i);
-			char low = id.charAt(i + 1);
-			bytes[i / 2] = (byte)((((high - 65) & 0x0F) << 4) | ((low - 65) & 0x0F));
-		}
-		return bytes;
 	}
 
 }
