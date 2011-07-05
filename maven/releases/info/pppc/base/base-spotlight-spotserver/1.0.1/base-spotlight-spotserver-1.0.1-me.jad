@@ -1,0 +1,9 @@
+MIDlet-Jar-URL: base-spotlight-spotserver-1.0.1-me.jar
+MIDlet-Jar-Size: 150669
+MIDlet-Name: BASE Spotlight Spotserver
+MIDlet-Vendor: Marcus Handte
+MIDlet-Version: 1.0.1
+Created-By: Marcus Handte
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.0
+MIDlet-1: Spotbridge, , info.pppc.base.demo.spotlight.Spotserver

@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>base-runtime</artifactId>
+		<groupId>info.pppc.base</groupId>
+		<version>1.0.1</version>
+	</parent>
+	<groupId>info.pppc.base</groupId>
+	<artifactId>base-plugin-irda</artifactId>
+	<version>1.0.1</version>
+	<name>BASE Plugin IRDA</name>
+	<description>A platform-specific BASE plug-in that supports communication over IRDA.</description>
+	<build>
+		<plugins>
+			<plugin>
+				<!-- Compile this code for CLDC. -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.3</source>
+					<target>1.1</target>
+					<compilerArguments>
+						<bootclasspath>${java.cdc.path}</bootclasspath>
+					</compilerArguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>base-core-system</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>base-plugin-common</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.mcpat.apistubs</groupId>
+			<artifactId>cdc-1.1.2-stub</artifactId>
+		</dependency>
+	</dependencies>
+</project>

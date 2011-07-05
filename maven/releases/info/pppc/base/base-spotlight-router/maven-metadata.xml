@@ -3,10 +3,11 @@
   <groupId>info.pppc.base</groupId>
   <artifactId>base-spotlight-router</artifactId>
   <versioning>
-    <release>1.0.0</release>
+    <release>1.0.1</release>
     <versions>
       <version>1.0.0</version>
+      <version>1.0.1</version>
     </versions>
-    <lastUpdated>20110523121622</lastUpdated>
+    <lastUpdated>20110705170911</lastUpdated>
   </versioning>
 </metadata>
