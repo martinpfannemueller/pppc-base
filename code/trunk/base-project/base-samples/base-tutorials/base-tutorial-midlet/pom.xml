@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-tutorials</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-tutorial-midlet</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>BASE Tutorial Midlet</name>
 	<description>An example that demonstrates the BASE on J2ME CLDC/MIDP devices.</description>
 	<build>

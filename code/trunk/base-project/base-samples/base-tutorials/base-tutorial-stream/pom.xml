@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-tutorials</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-tutorial-stream</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>BASE Tutorial Stream</name>
 	<description>An example that demonstrates streaming in the BASE middleware.</description>
 	<build>

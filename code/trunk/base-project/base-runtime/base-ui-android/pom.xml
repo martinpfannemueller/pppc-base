@@ -3,11 +3,11 @@
   <parent>
     <artifactId>base-runtime</artifactId>
     <groupId>info.pppc.base</groupId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
   </parent>
   <groupId>info.pppc.base</groupId>
   <artifactId>base-ui-android</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <packaging>apklib</packaging>
   <name>BASE UI Android</name>
   <description>A simple Android-based user interface for BASE that includes a system browser.</description>

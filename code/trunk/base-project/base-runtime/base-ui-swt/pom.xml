@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-runtime</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-ui-swt</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>BASE UI SWT</name>
 	<description>A simple SWT UI for BASE that includes a system and service browser.</description>
 	<build>

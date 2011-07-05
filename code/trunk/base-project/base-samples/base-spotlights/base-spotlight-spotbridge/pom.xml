@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-spotlights</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-spotlight-spotbridge</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>BASE Spotlight Spotbridge</name>
 	<description>A BASE SunSPOT device that routes USB traffic to 802.15.4.</description>
 	<build>
