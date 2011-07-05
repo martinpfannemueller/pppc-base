@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-runtime</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-plugin-emulator</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>BASE Plugin Emulator</name>
 	<description>An IP-based BASE plug-in that enables the emulation of a network topology using several instances.</description>
 	<build>

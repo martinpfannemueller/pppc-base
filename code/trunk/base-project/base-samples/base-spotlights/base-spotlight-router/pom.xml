@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-spotlights</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-spotlight-router</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>BASE Spotlight Router</name>
 	<description>A BASE device that routes IP communication to a SunSPOT connected via USB.</description>
 	<build>

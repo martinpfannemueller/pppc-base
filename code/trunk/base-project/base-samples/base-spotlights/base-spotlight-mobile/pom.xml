@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-spotlights</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-spotlight-mobile</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>BASE Spotlight Mobile</name>
 	<description>A BASE device with SWT user interface to control SunSPOT LEDs.</description>
 	<build>

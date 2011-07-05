@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-runtime</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-plugin-sunspot</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>BASE Plugin Sunspot</name>
 	<description>The platform-specific BASE plugins for the SunSPOT platform.</description>
 	<build>

@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-runtime</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-ui-midp</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>BASE UI MIDP</name>
 	<description>A simple MIDP based user interface for BASE that includes a device browser.</description>
 	<build>

@@ -4,13 +4,13 @@
 	<parent>
 		<artifactId>base-project</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-runtime</artifactId>
 	<packaging>pom</packaging>
 	<name>BASE Runtime</name>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<description>The runtime of BASE including cores, extensions, and plug-ins.</description>
 	<modules>
 		<module>base-core-system</module>
@@ -22,7 +22,8 @@
 		<module>base-plugin-ip</module>
 		<module>base-plugin-irda</module> 
 		<module>base-plugin-security</module> 
-		<module>base-plugin-serial</module> 
+		<module>base-plugin-serial</module>
+		<module>base-plugin-compression</module>  
 		<module>base-plugin-sunspot</module> 
 		<module>base-extension-fastecc</module>
 		<module>base-extension-provider</module>

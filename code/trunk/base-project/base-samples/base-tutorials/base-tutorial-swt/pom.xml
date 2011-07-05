@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>base-tutorials</artifactId>
 		<groupId>info.pppc.base</groupId>
-		<version>1.0.1</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>info.pppc.base</groupId>
 	<artifactId>base-tutorial-swt</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>BASE Tutorial SWT</name>
 	<description>An example that demonstrates the BASE user interface for SWT.</description>
 	<build>
