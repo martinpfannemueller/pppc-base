@@ -1,0 +1,34 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains a simple event system with a small number of
+helper classes. The listener interface is a generic interface that
+can receive events. The listener bundle provides a way to register
+such listeners and to create events. Different event types within
+the same bundle are supported through type constants. These type
+constants are interpreted as bit-fields. Thus, the bits set in 
+each event MUST NOT overlap. If you want to create events, you
+should use 1, 2, 4, 8, 16, 32, ... as values. A listener can be registered
+for multiple events at the same time by registering the specific
+bit-string. E.g., a string of 3 would register the listener for the 
+events 1 and 2. The event defines constants to register a listener
+for all possible event types. This is especially useful if the list
+of possible events is long or the developer wants to ensure that
+the listener is no longer registered for any event.
+</p>
+<p>
+If a developer calls the fire-event method on the listener bundle,
+the ordering of event delivery is either in the order in which the
+listeners have been registered or in the inverse order. An event
+that is fired can contain a user-defined data object. Furthermore,
+the event can be undoable. If it is undoable, the event will be
+sent to all listeners until a listener sets the undo flag at the
+event. If the undo flag is set, all listeners that have been 
+notified so far will be notified again (together with the set
+undo flag). The return type of the fire event method determines
+whether the event has been requested to be undone.
+</p>
+</body>
+<html> 

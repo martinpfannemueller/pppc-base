@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>base-project</artifactId>
+		<groupId>info.pppc.base</groupId>
+		<version>1.0.1</version>
+	</parent>
+	<groupId>info.pppc.base</groupId>
+	<artifactId>base-runtime</artifactId>
+	<packaging>pom</packaging>
+	<name>BASE Runtime</name>
+	<version>1.0.1</version>
+	<description>The runtime of BASE including cores, extensions, and plug-ins.</description>
+	<modules>
+		<module>base-core-system</module>
+		<module>base-core-security</module>
+		<module>base-plugin-common</module>
+		<module>base-plugin-android</module>
+		<module>base-plugin-bluetooth</module>
+		<module>base-plugin-emulator</module>
+		<module>base-plugin-ip</module>
+		<module>base-plugin-irda</module> 
+		<module>base-plugin-security</module> 
+		<module>base-plugin-serial</module> 
+		<module>base-plugin-sunspot</module> 
+		<module>base-extension-fastecc</module>
+		<module>base-extension-provider</module>
+		<module>base-extension-lease</module>
+		<module>base-extension-service</module>
+		<module>base-ui-android</module>
+		<module>base-ui-midp</module>
+		<module>base-ui-swt</module>
+	</modules>
+</project>

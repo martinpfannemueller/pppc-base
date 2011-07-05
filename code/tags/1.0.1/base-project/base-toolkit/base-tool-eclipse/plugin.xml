@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.jdt.core.ICompilationUnit"
+            id="info.pppc.base.eclipse.generator">
+         <menu
+               label="%info.pppc.base.eclipse.popup.menu.label"
+               path="additions"
+               id="info.pppc.base.eclipse.popup.menu">
+            <separator
+                  name="group">
+            </separator>
+         </menu>
+         <action
+               class="info.pppc.base.eclipse.popup.action.SkeletonAction"
+               enablesFor="1"
+               id="info.pppc.base.eclipse.popup.action.skeleton"
+               label="%info.pppc.base.eclipse.popup.skeleton.label"
+               menubarPath="info.pppc.base.eclipse.popup.menu/group">
+         </action>
+         <action
+               class="info.pppc.base.eclipse.popup.action.ProxyAction"
+               enablesFor="1"
+               id="info.pppc.base.eclipse.popup.action.proxy"
+               label="%info.pppc.base.eclipse.popup.proxy.label"
+               menubarPath="info.pppc.base.eclipse.popup.menu/group">
+         </action>
+         <action
+               class="info.pppc.base.eclipse.popup.action.SecureSkeletonAction"
+               enablesFor="1"
+               id="info.pppc.base.eclipse.popup.action.secureskeleton"
+               label="%info.pppc.base.eclipse.popup.secureskeleton.label"
+               menubarPath="info.pppc.base.eclipse.popup.menu/group">
+         </action>
+         <action
+               class="info.pppc.base.eclipse.popup.action.SecureProxyAction"
+               enablesFor="1"
+               id="info.pppc.base.eclipse.popup.action.secureproxy"
+               label="%info.pppc.base.eclipse.popup.secureproxy.label"
+               menubarPath="info.pppc.base.eclipse.popup.menu/group">
+         </action>
+         <action
+               class="info.pppc.base.eclipse.popup.action.StubAction"
+               enablesFor="1"
+               id="info.pppc.base.eclipse.popup.action.stubs"
+               label="%info.pppc.base.eclipse.popup.stubs.label"
+               menubarPath="info.pppc.base.eclipse.popup.menu/group">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>

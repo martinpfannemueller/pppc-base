@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BASE Android</string>
+    <string name="service_status">Status</string>
+    <string name="broker">Invocation Broker</string>
+    <string name="broker_started">Started</string>
+    <string name="broker_stopped">Stopped</string>
+    <string name="plugin_bluetooth">Bluetooth Plug-in</string>
+    <string name="plugin_wifi">Wifi Plug-in</string>
+    <string name="plugin_installed">Installed</string>
+    <string name="plugin_uninstalled">Uninstalled</string>
+    <string name="device_list">Devices</string>
+    
+    <string name="menu_toggle">Toggle</string>
+    <string name="menu_setting">Setting</string>
+    <string name="menu_log">Log</string>
+    <string name="menu_refresh">Refresh</string>
+    
+    <string name="device_name">Name</string>
+    <string name="device_id">Identifier</string>
+
+    <string name="log_status">Log</string>
+    
+    <string name="setting_category_plugin">Plug-ins</string>
+    <string name="setting_wifi">Wifi</string>
+    <string name="setting_wifi_summary">Enables managed transceiver on wifi adapter.</string>
+    <string name="setting_bluetooth">Bluetooth</string>
+    <string name="setting_bluetooth_summary">Enables managed transceiver on Bluetooth adapter.</string>
+</resources>

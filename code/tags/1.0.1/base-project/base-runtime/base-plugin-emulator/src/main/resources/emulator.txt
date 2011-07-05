@@ -1,0 +1,36 @@
+# This file is used by the MxIPEmulatorTransceiver
+# It defines a scenario from devices and connections
+#
+# Devices are specified with the case-sensitive device 
+# directive
+# device.<NAME> = <IP/HOST>:<PORT> | <PORT>
+#
+# Connections are specified with the case-sensitive connect 
+# directive
+# connect = <NAME>:<NAME>
+#
+# Devices appearing in the connections directive must have
+# been declared earlier in a corresponding device directive 
+#
+# Note that the devices are treated in order, devices
+# that appear latter in the file will establish the
+# connection to devices that appear earlier. This means
+# that (!) if you distribute the file to several
+# hosts the device ordering MUST REMAIN THE SAME
+#
+# The following example specifies three devices that are
+# forming a chain:
+#
+# device.A = 10001
+# device.B = localhost:10002
+# device.C = basic.cs.uni-bonn.de:10003
+# connect = A:B
+# connect = B:C
+#
+# Now comes the real scenario
+
+device.A = 10001
+device.B = 10002
+device.C = 10003
+connect = A:B
+connect = B:C

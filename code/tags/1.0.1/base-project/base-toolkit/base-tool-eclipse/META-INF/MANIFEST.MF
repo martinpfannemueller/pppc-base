@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: 3PC BASE Tools
+Bundle-SymbolicName: info.pppc.base.eclipse;singleton:=true
+Bundle-Version: 1.0.1
+Bundle-Activator: info.pppc.base.eclipse.Plugin
+Bundle-Vendor: IPVS
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.resources,
+ org.eclipse.jdt.core,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.jdt.ui
+Eclipse-LazyStart: true
+Export-Package: info.pppc.base.eclipse.generator, info.pppc.base.eclipse.generator.io, info.pppc.base.eclipse.generator.template, info.pppc.base.eclipse.generator.util

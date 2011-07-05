@@ -1,0 +1,98 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains the base micro-broker. The core of
+the micro-broker is the invocation broker. The invocation
+broker is responsible for delivering invocations from a
+source to a target. If the target is on a remote device, 
+the broker will use the plug-ins that are managed by the 
+so-called plug-in manager.
+</p>
+<p>
+To address devices and services, the invocation broker uses
+three different types of ids:
+</p>
+<p>
+The most primive id is the object id. The object id is a locally 
+unique id that is typically used to address a local service or 
+some locally unique state. To create a unique id, a developer can 
+call the static create method on object id. If the create method
+is used, the id returned might differ from execution to execution
+(depending on the number of create calls that have been issued 
+before the developer called the method). Thus, dynamically creating
+these ids might prohibit the persistent storage of ids. To enable
+this, an object id can also be created by passing a non-negative
+id to its constructor. This will guarantee, that the id stays the
+same over various executions. However, that way, the developer
+must guarantee, that the id is locally unique. This type of well
+known ids is typically solely used by well-known services.
+</p>
+<p>
+The second type of id used by BASE are the so-called system ids. 
+System ids are globally unique ids that are unique for each system.
+The system id of the local device can be accessed through the global 
+constant called system in the system id class. The concrete value
+of the system id can also be set (before system startup) by setting
+the system property "info.pppc.device".
+</p>
+<p>
+The third type of ids are reference ids. Reference ids are created 
+by combining system ids and object ids. Reference ids are typically
+used to address services independently from their location.
+</p>
+<p>
+To dispatch an invocation to a local service, the invocation broker
+manages a internal table called object registry. This table
+associates so-called invocation handlers with an object id.
+The object ids can either be well-known or not well known. If
+the ids are well-known, the availability of the service will
+be announced proactivly. If they are not well-known, the
+services will not be announced at all. An invocation handler is 
+simply an interface that accepts an invocation. Typically, an
+invocation handler will be a skeleton created by the BASE 
+eclipse plug-in.
+</p>
+<p>
+To forward an invocation to some remote device, the invocation
+broker uses the so-called plug-in manager. The plug-in manager
+defines a number of plug-in layers. Using different plug-ins for
+these layers, the plug-in manager can compose various communication
+stacks that are able to communicate with remote devices. To figure
+out, the set of plug-ins that are available on some remote device,
+the plug-in manager uses discovery plug-ins. These plug-ins typically
+announce the device description (i.e. the name, system id and the
+set of well-known services of some device) and the descriptions of
+the available plug-ins. If a device or plug-in description has been
+received, the plug-in manager will add the description to the local
+device registry where it can be retrieved during stack composition.
+A developer can customize the announced device name and type by
+setting the "info.pppc.name" and "info.pppc.type" system properties
+before the broker is created. A definition of possible types can
+be found in the device description class.
+</p>
+<p>
+After the plug-in manager has created the stack, the manager will
+first send some session data through the stack. This data will
+tell the remote device how to compose a stack that is compatible.
+After the session data has been transfered, the plug-in manager
+will send the invocation. 
+</p>
+<p>
+All these entities (i.e., plug-in manager, device registry and
+object registry) can be accessed trough the invocaton broker.
+The broker itself is a singleton that can be accessed through
+the get instance method. A typical startup entails creating a
+broker, retrieving the plug-in manager, installing a set of
+plug-ins, creating other system services (such as the service
+registry), registering services and waiting for incoming calls.
+In order to perform a clean shutdown, the developer must call 
+the shutdown method on the broker. This will stop and remove all 
+plug-ins and stop all threads. Calling this method will also 
+issue an event. Other system services register listeners at the 
+invocation broker whenever they are started. That way they can 
+also perform a clean shutdown.
+</p>
+</body>
+<html> 

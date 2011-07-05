@@ -1,0 +1,28 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains an simple example for the emulator plug-in. The 
+emulator plug-in uses the scenario.txt file to read its configuration.
+The scenario defines 4 devices that are connected in a cycle. The
+application itself reuses the RMI example which exports a service on
+each device and queries for it continuously. If a service is found,
+the print method is called. For more details see the RMI example.
+</p>
+<p>
+In order to run this demo, you need to start the EmulatorMain class
+4 times. Notice that each application instance will pick its own 
+configuration from the scenario depending on the order in which it 
+is started. You may kill and restart any instance. The emulator 
+plug-in will simply restart them and reconnect them as you would
+expect.
+</p>
+<p>
+Even though not all devices are connected directly to each other,
+each device will find all remote services as the example installs
+a routing plug-in as well. You may remove the routing plug-in by
+commenting the line <code>m.addPlugin(new ProactiveRouting());</code>.
+</p>
+</body>
+<html>
