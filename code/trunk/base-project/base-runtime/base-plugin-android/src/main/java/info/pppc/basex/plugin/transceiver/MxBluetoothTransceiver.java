@@ -591,7 +591,7 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 						OutputStream os = bs.getOutputStream();
 						ObjectOutputStream oos = new ObjectOutputStream(os);
 						oos.writeObject(SystemID.SYSTEM);
-						oos.writeObject(adapter.getAddress().toUpperCase());
+						oos.writeUTF(adapter.getAddress().toUpperCase());
 						ObjectInputStream ois = new ObjectInputStream(is);
 						SystemID remote = (SystemID)ois.readObject();
 						String remoteDevice = ois.readUTF().toUpperCase();
