@@ -51,7 +51,25 @@ public class ProactiveDiscovery implements IDiscovery, IListener, IOperation {
 	/**
 	 * The amount of time that a announcement stays valid.
 	 */
-	private static final int REMOVAL_PERIOD = 18000;
+	private static final int REMOVAL_PERIOD;
+	
+	/**
+	 * Set the removal period depending on the underlying operating
+	 * system. Normally, 18 seconds should be fine but on Android,
+	 * there are frequent wifi scans which lead to packet loss and
+	 * thus, we will just increase the period there.
+	 */
+	static {
+		int period = 18000;
+		String vendor = System.getProperty("java.vm.vendor");
+		if (vendor != null) {
+			vendor = vendor.toLowerCase();
+			if (vendor.indexOf("android") != -1) {
+				period = 30000;
+			}
+		}
+		REMOVAL_PERIOD = period;
+	}
 	
 	/**
 	 * The plug-in description of the ip plug-in.
@@ -92,6 +110,7 @@ public class ProactiveDiscovery implements IDiscovery, IListener, IOperation {
 	 * starts a thread that announces plug-ins.
 	 */
 	public synchronized void start() {
+		Logging.debug(getClass(), "Starting proactive discovery with " + DISCOVERY_PERIOD + "/" + REMOVAL_PERIOD + ".");
 		if (! started) {
 			started = true;
 			// register this plug-in manager for plug-in events
@@ -291,7 +310,7 @@ public class ProactiveDiscovery implements IDiscovery, IListener, IOperation {
 							ByteArrayInputStream bis = new ByteArrayInputStream(buffer);
 							ObjectInputStream ois = new ObjectInputStream(bis);
 							DeviceDescription device = (DeviceDescription)ois.readObject();
-							if (device != null) { 
+							if (device != null && ! SystemID.SYSTEM.equals(device.getSystemID())) { 
 								SystemID id = device.getSystemID();
 								int plugins = ois.readInt();
 								for (int i = 0; i < plugins; i++) {
