@@ -250,6 +250,9 @@ public class ExchangeSemantic implements ISemantic {
 				hmac[i] = secret[i + 16];
 			}
 			store.addKey(system, new HMACSymmetricKey(hmac), new AESSymmetricKey(aes), time, trustLevel);
+			// tell the remote device that the key has been computed
+			out.writeBoolean(true);
+			out.flush();
 		} catch (IOException e) {
 			Logging.error(getClass(), "Exception during key exchange.", e);
 			connector.release();
@@ -385,7 +388,11 @@ public class ExchangeSemantic implements ISemantic {
 					aes[i] = secret[i];
 					hmac[i] = secret[i + 16];
 				}
-				store.addKey(invocation.getTarget().getSystem(), new HMACSymmetricKey(hmac), new AESSymmetricKey(aes), time, trustLevel);				
+				if (in.readBoolean()) {
+					store.addKey(invocation.getTarget().getSystem(), new HMACSymmetricKey(hmac), new AESSymmetricKey(aes), time, trustLevel);				
+				} else {
+					throw new IOException("Did not get exchange confirmation.");
+				}
 			} catch (IOException e) {
 				c.release();
 				throw e;
