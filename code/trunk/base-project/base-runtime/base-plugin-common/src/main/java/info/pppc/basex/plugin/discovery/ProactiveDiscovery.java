@@ -10,6 +10,7 @@ import info.pppc.base.system.io.ObjectOutputStream;
 import info.pppc.base.system.operation.IMonitor;
 import info.pppc.base.system.operation.IOperation;
 import info.pppc.base.system.operation.NullMonitor;
+import info.pppc.base.system.plugin.GroupConnector;
 import info.pppc.base.system.plugin.IDiscovery;
 import info.pppc.base.system.plugin.IDiscoveryManager;
 import info.pppc.base.system.plugin.IPacket;
@@ -34,6 +35,31 @@ import java.util.Vector;
 public class ProactiveDiscovery implements IDiscovery, IListener, IOperation {
 		
 	/**
+	 * This class is used to memorize when the next message
+	 * should be received from a known remote device.
+	 * 
+	 * @author Mac
+	 */
+	private class Annoucement {
+		/**
+		 * This is the system that has sent an annoucement.
+		 */
+		private SystemID system;
+		/**
+		 * This is the ability over which the annoucement has been received.
+		 */
+		private Short ability;
+		/**
+		 * This is the time at which the next annoucement should be received.
+		 */
+		private long time;
+		/**
+		 * The number of messages that have been missed.
+		 */
+		private int missed;
+	}
+	
+	/**
 	 * The ability of the plug-in. [0][0].
 	 */
 	private static final short PLUGIN_ABILITY = 0x0000;
@@ -44,9 +70,19 @@ public class ProactiveDiscovery implements IDiscovery, IListener, IOperation {
 	private static final short DISCOVERY_GROUP = 0;
 		
 	/**
-	 * The amount of time that lies between two announcements.
+	 * The minimum period between two packets.
+	 */
+	private static final int DISCOVERY_SLACK = 1000;
+	
+	/**
+	 * The normal amount of time that lies between two announcements.
 	 */
 	private static final int DISCOVERY_PERIOD = 4000;
+	
+	/**
+	 * The duration of the burst mode in number of transmissions.
+	 */
+	private static final int DISCOVERY_BURST = 3;
 	
 	/**
 	 * The amount of time that a announcement stays valid.
@@ -92,12 +128,31 @@ public class ProactiveDiscovery implements IDiscovery, IListener, IOperation {
 	 * A hash table of connectors hashed by ability.
 	 */
 	private Hashtable connectors = new Hashtable();
+
+	/**
+	 * This is a list of negative acknowledgements that have been
+	 * received from certain remote devices. The list contains
+	 * the ability of the plug-in that received the nack.
+	 */
+	private Vector negatives = new Vector();
+	
+	/**
+	 * This is a list of devices and connectors that describe when
+	 * to transmit a certain nack over a certain plug-in.
+	 */
+	private Vector announcements = new Vector();
 	
 	/**
 	 * The monitor of the announcement operation.
 	 */
 	private IMonitor monitor;
-
+	
+	/**
+	 * The number of remaining packets to be transmitted in
+	 * burst mode.
+	 */
+	private int burst = 0;
+	
 	/**
 	 * Creates a new simple discovery plug-in.
 	 */
@@ -110,7 +165,8 @@ public class ProactiveDiscovery implements IDiscovery, IListener, IOperation {
 	 * starts a thread that announces plug-ins.
 	 */
 	public synchronized void start() {
-		Logging.debug(getClass(), "Starting proactive discovery with " + DISCOVERY_PERIOD + "/" + REMOVAL_PERIOD + ".");
+		Logging.debug(getClass(), "Starting proactive discovery with " + DISCOVERY_PERIOD 
+				+ "/" + DISCOVERY_SLACK + "/" + REMOVAL_PERIOD + ".");
 		if (! started) {
 			started = true;
 			// register this plug-in manager for plug-in events
@@ -154,66 +210,202 @@ public class ProactiveDiscovery implements IDiscovery, IListener, IOperation {
 	 * 	operation should be still performed.
 	 */
 	public void perform(IMonitor monitor) {
+		Annoucement a = new Annoucement();
+		a.system = SystemID.SYSTEM;
+		a.ability = new Short((short)0);
 		Vector keys = new Vector();
 		while (! monitor.isCanceled()) {
+			// get all transceiver plug-in abilities
 			synchronized (this) {
 				Enumeration e = connectors.keys();
 				while (e.hasMoreElements()) {
 					keys.addElement(e.nextElement());
 				}
 			}
+			// send an announcement using all transceivers
 			while (! keys.isEmpty()) {
 				Short ability = (Short)keys.elementAt(0);
 				keys.removeElementAt(0);
-				IPacketConnector connector = null;
-				synchronized (this) {
-					connector = (IPacketConnector)connectors.get(ability);
-					if (connector == null) continue;				
+				announce(ability);
+			}
+			// compute the next announcement time and insert a marker
+			synchronized (this) {
+				if (burst > 0) {
+					burst -= 1;
+					a.time = System.currentTimeMillis() + DISCOVERY_SLACK;
+					Logging.debug(getClass(), "Continuing burst mode for " + burst + " transmissions.");
+				} else {
+					a.time = System.currentTimeMillis() + DISCOVERY_PERIOD;
 				}
-				try {
-					// device description
-					ByteArrayOutputStream bos = new ByteArrayOutputStream();
-					ObjectOutputStream oos = new ObjectOutputStream(bos);
-					oos.writeObject(manager.getDeviceDescription(SystemID.SYSTEM));
-					// plug-in descriptions
-					Vector announcement = new Vector();
-					PluginDescription[] plugins = manager.getPluginDescriptions(SystemID.SYSTEM);
-					for (int i = 0; i < plugins.length; i++) {
-						PluginDescription pd = plugins[i];
-						// only announce non-transceivers and same transceiver					
-						if ((pd.getExtension() != EXTENSION_TRANSCEIVER) && 
-								pd.getExtension() != EXTENSION_ROUTING &&
-									pd.getExtension() != EXTENSION_DISCOVERY || 
-									pd.getAbility() == ability.shortValue()) {
-							announcement.addElement(pd);
-						}
+				boolean added = false;
+				for (int i =  announcements.size() - 1; i >= 0; i--) {
+					Annoucement b = (Annoucement)announcements.elementAt(i);
+					if (b.time < a.time) {
+						announcements.insertElementAt(a, i + 1);
+						added = true;
+						break;
 					}
-					oos.writeInt(announcement.size());
-					for (int i = 0; i < announcement.size(); i++) {
-						oos.writeObject((PluginDescription)announcement.elementAt(i));
-					}
-					oos.close();
-					byte[] buffer = bos.toByteArray();
-					if (connector.getPacketLength() < buffer.length) {
-						Logging.debug(getClass(), "Descriptions exceed maximum packet length.");
-					} else {
-						IPacket packet = connector.createPacket();
-						packet.setPayload(buffer);
-						connector.sendPacket(packet);
-					}
-				} catch (IOException ex) {
-					Logging.error(getClass(), "Caught exception while sending.", ex);
-				}				
+				}
+				if (! added) {
+					announcements.insertElementAt(a, 0);
+				}
 			}
 			try {
-				synchronized (monitor) {
-					monitor.wait(DISCOVERY_PERIOD);	
+				wait: while (true) {
+					// wait until we need to reply to a nack or the next announcement must be made
+					Annoucement next = (Annoucement)announcements.elementAt(0);
+					long sleep = System.currentTimeMillis() - next.time;
+					while (sleep > 0 && negatives.isEmpty()) {
+						synchronized (monitor) {					
+							monitor.wait(sleep);
+						}
+						next = (Annoucement)announcements.elementAt(0);
+						sleep = System.currentTimeMillis() - next.time;
+					}
+					synchronized (this) {
+						// respond to nacks
+						while (! negatives.isEmpty()) {
+							Short ability = (Short)negatives.elementAt(0);
+							negatives.removeElementAt(0);
+							Logging.debug(getClass(), "Handling negative acknowledge " + ability);
+							if (ability != null) announce(ability);
+						}
+						// send nacks, if necessary or retransmit bc
+						next = (Annoucement)announcements.elementAt(0);
+						while (next.time <= System.currentTimeMillis()) {
+							announcements.removeElement(next);
+							if (next.system.equals(SystemID.SYSTEM)) {
+								// do a complete announcement
+								break wait;
+							} else {
+								// send a nack and insert packet
+								acknowledge(next.ability, next.system);
+								next.time = System.currentTimeMillis() + DISCOVERY_SLACK;
+								next.missed += 1;
+								if (next.missed * DISCOVERY_SLACK < REMOVAL_PERIOD) {
+									boolean added = false;
+									for (int i =  announcements.size() - 1; i >= 0; i--) {
+										Annoucement b = (Annoucement)announcements.elementAt(i);
+										if (b.time < next.time) {
+											announcements.insertElementAt(next, i + 1);
+											added = true;
+											break;
+										}
+									}
+									if (! added) {
+										announcements.insertElementAt(next, 0);
+									}
+								}
+							}
+							next = (Annoucement)announcements.elementAt(0);
+						}
+					}
 				}
 			} catch (InterruptedException ex) {
 				Logging.debug(getClass(), "Thread got interrupted.");
 			}
 		}
 		Logging.debug(getClass(), "Stopping discovery.");
+	}
+	
+	/**
+	 * Annouces the availability of the device using the given plug-in.
+	 * 
+	 * @param ability The ability of the plug-in.
+	 */
+	private void announce(Short ability) {
+		Logging.log(getClass(), "Sending annouce " + ability);
+		IPacketConnector connector = null;
+		synchronized (this) {
+			connector = (IPacketConnector)connectors.get(ability);
+			if (connector == null) return;				
+		}
+		try {
+
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(bos);
+			// this is an announcement and not a nack
+			oos.writeBoolean(true);
+			// write the device description
+			oos.writeObject(manager.getDeviceDescription(SystemID.SYSTEM));
+			// plug-in descriptions
+			Vector announcement = new Vector();
+			PluginDescription[] plugins = manager.getPluginDescriptions(SystemID.SYSTEM);
+			for (int i = 0; i < plugins.length; i++) {
+				PluginDescription pd = plugins[i];
+				// only announce non-transceivers and same transceiver					
+				if ((pd.getExtension() != EXTENSION_TRANSCEIVER) && 
+						pd.getExtension() != EXTENSION_ROUTING &&
+							pd.getExtension() != EXTENSION_DISCOVERY || 
+							pd.getAbility() == ability.shortValue()) {
+					announcement.addElement(pd);
+				}
+			}
+			// write the plug-in descriptions
+			oos.writeInt(announcement.size());
+			for (int i = 0; i < announcement.size(); i++) {
+				oos.writeObject((PluginDescription)announcement.elementAt(i));
+			}
+			// write the devices that have been received via this transceiver to trigger bursts
+			Vector systems = new Vector();
+			synchronized (this) {
+				for (int i = 0; i < announcements.size(); i++) {
+					Annoucement a = (Annoucement)announcements.elementAt(i);
+					if (a.ability.equals(ability) && ! SystemID.SYSTEM.equals(a.system)) {
+						systems.addElement(a.system);
+					}
+				}
+			}
+			oos.writeInt(systems.size());
+			for (int i = 0; i < systems.size(); i++) {
+				oos.writeObject((SystemID)systems.elementAt(i));
+			}
+			// create a packet and send it
+			oos.close();
+			byte[] buffer = bos.toByteArray();
+			if (connector.getPacketLength() < buffer.length) {
+				Logging.debug(getClass(), "Descriptions exceed maximum packet length.");
+			} else {
+				IPacket packet = connector.createPacket();
+				packet.setPayload(buffer);
+				connector.sendPacket(packet);
+			}
+		} catch (IOException ex) {
+			Logging.error(getClass(), "Caught exception while sending.", ex);
+		}				
+	}
+	
+	/**
+	 * Sends a negative acknowledgment using the specified plug-in to
+	 * the specified system.
+	 * 
+	 * @param ability The ability of the plug-in to use.
+	 * @param system The system to target.
+	 */
+	private void acknowledge(Short ability, SystemID system) {
+		Logging.log(getClass(), "Sending negative acknowledge " + ability + " to " + system);
+		IPacketConnector connector = null;
+		synchronized (this) {
+			connector = (IPacketConnector)connectors.get(ability);
+			if (connector == null) return;				
+		}
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(bos);
+			oos.writeBoolean(false);
+			oos.writeObject(system);
+			oos.close();
+			byte[] buffer = bos.toByteArray();
+			if (connector.getPacketLength() < buffer.length) {
+				Logging.debug(getClass(), "Acknowledge exceeds maximum packet length.");
+			} else {
+				IPacket packet = connector.createPacket();
+				packet.setPayload(buffer);
+				connector.sendPacket(packet);
+			}
+		} catch (IOException ex) {
+			Logging.error(getClass(), "Caught exception while sending.", ex);
+		}				
 	}
 	
 
@@ -287,18 +479,28 @@ public class ProactiveDiscovery implements IDiscovery, IListener, IOperation {
 			} 
 			// handle events coming from one of the packet connectors.
 			else if (event.getSource() instanceof IPacketConnector) {
+				Short ability = null;
+				if (event.getSource() instanceof GroupConnector) {
+					ability = ((GroupConnector)event.getSource()).getAbility();
+				} if (ability == null) {
+					try {
+						ability = new Short(((IPacketConnector)event.getSource())
+								.getPlugin().getPluginDescription().getAbility());
+					} catch (NullPointerException e) {
+						return;
+					}
+				}
 				switch (event.getType()) {
 					case IPacketConnector.EVENT_PACKET_CLOSED: {
-						Enumeration e = connectors.keys();
-						while (e.hasMoreElements()) {
-							Short key = (Short)e.nextElement();
-							if (event.getSource() == connectors.get(key)) {
-								IPacketConnector connector = (IPacketConnector)connectors.remove(key);
-								connector.removePacketListener(IPacketConnector.EVENT_PACKET_CLOSED 
-										| IPacketConnector.EVENT_PACKET_RECEIVED, this);
-								connector.release();
-								break;
-							}
+						IPacketConnector connector = null;
+						synchronized (this) {
+							connector = (IPacketConnector)connectors.remove(ability);
+							
+						}
+						if (connector != null) {
+							connector.removePacketListener(IPacketConnector.EVENT_PACKET_CLOSED 
+									| IPacketConnector.EVENT_PACKET_RECEIVED, this);
+							connector.release();
 						}
 						break;
 					}
@@ -309,15 +511,86 @@ public class ProactiveDiscovery implements IDiscovery, IListener, IOperation {
 							byte[] buffer = packet.getPayload();
 							ByteArrayInputStream bis = new ByteArrayInputStream(buffer);
 							ObjectInputStream ois = new ObjectInputStream(bis);
-							DeviceDescription device = (DeviceDescription)ois.readObject();
-							if (device != null && ! SystemID.SYSTEM.equals(device.getSystemID())) { 
-								SystemID id = device.getSystemID();
-								int plugins = ois.readInt();
-								for (int i = 0; i < plugins; i++) {
-									PluginDescription plugin = (PluginDescription)ois.readObject();
-									manager.registerPlugin(id, plugin, REMOVAL_PERIOD);
+							if (ois.readBoolean()) {
+								// simple remote announcement
+								DeviceDescription device = (DeviceDescription)ois.readObject();
+								if (device != null && ! SystemID.SYSTEM.equals(device.getSystemID())) { 
+									SystemID id = device.getSystemID();
+									Logging.debug(getClass(), "Received announce from " + id);
+									int plugins = ois.readInt();
+									for (int i = 0; i < plugins; i++) {
+										PluginDescription plugin = (PluginDescription)ois.readObject();
+										manager.registerPlugin(id, plugin, REMOVAL_PERIOD);
+									}
+									manager.registerDevice(device, REMOVAL_PERIOD);
+									boolean startBurst = true;
+									int systems = ois.readInt();
+									for (int i = 0; i < systems; i++) {
+										Object system = ois.readObject();
+										if (SystemID.SYSTEM.equals(system)) { 
+											startBurst = false;
+											break;
+										}
+									}
+									synchronized (this) {
+										long time = System.currentTimeMillis() + DISCOVERY_PERIOD + DISCOVERY_SLACK;
+										boolean add = true;
+										for (int i = 0; i < announcements.size(); i++) {
+											Annoucement a = (Annoucement)announcements.elementAt(i);
+											if (a.ability.equals(ability) && a.system.equals(id)) {
+												announcements.removeElementAt(i);
+												a.time = time;
+												a.missed = 0;
+												announcements.addElement(a);
+												add = false;
+												break;
+											}
+										}
+										if (add) {
+											Annoucement a = new Annoucement();
+											a.time = time;
+											a.system = id;
+											a.ability = ability;
+											a.missed = 0;
+											announcements.addElement(a);
+										}
+										if (startBurst) {
+											Logging.log(getClass(), "Starting burst mode due to system " + device.getSystemID() + ".");
+											burst = DISCOVERY_BURST;
+											for (int i = 0; i < announcements.size(); i++) {
+												Annoucement a = (Annoucement)announcements.elementAt(i);
+												if (SystemID.SYSTEM.equals(a.system)) {
+													announcements.removeElementAt(i);
+													a.time = System.currentTimeMillis();
+													announcements.insertElementAt(a, 0);
+													break;
+												}
+											}
+										}
+									}
+									if (startBurst) {
+										synchronized (monitor) {
+											monitor.notifyAll();
+										}
+									}
 								}
-								manager.registerDevice(device, REMOVAL_PERIOD);
+							} else {
+								// negative acknowledgement
+								SystemID system = (SystemID)ois.readObject();
+								if (SystemID.SYSTEM.equals(system) && ability != null) {
+									Logging.debug(getClass(), "Received negative acknowledgement over " + ability);
+									// received for me, find connector
+									synchronized (this) {
+										if (!negatives.contains(ability)) {
+											negatives.add(ability);
+										}
+									}
+									if (! negatives.isEmpty()) {
+										synchronized (monitor) {
+											monitor.notify();
+										}
+									}
+								}
 							}
 						} catch (Throwable t) {
 							Logging.error(getClass(), "Received malformed packet.", t);
