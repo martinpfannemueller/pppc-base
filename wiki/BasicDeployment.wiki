@@ -15,8 +15,12 @@ Running the middleware on a PDA requires a virtual machine such as J9, for examp
 = SunSPOT =
 
 Running the middleware on a sunspot requires a sunspot development kit. This can be installed automatically via the sunspot manager which is a Java webstart application. The sunspot manager will also install apache ant and netbeans. After installing the development kit, simply connect the sunspot and the driver should install automatically (on windows x86, on windows x64 you need to modify the sunspot.inf file in \windows\inf). Once the sunspot is connected, you can simply deploy the bundle consisting of your application and the middleware using netbeans. The details of this process are described within the developers guide that can be found in the doc directory of the sdk.
-Note on deploying on Sunspot: Once the base code has been mavenised as described in other sections, the jar file created in the .m2/repository/.. should be deployed on the sunspot by using the following command:
+= Note on deploying on Sunspot =
+Use following command to deploy the jar on sunpot:
 ant jar-deploy -Dfrom.jar.file="filename.jar" -Dmanifest.name="name of the Manifest file".
+Use following command to execute the jar on router:
+jamvm -Xbootclasspath:/mnt/usb/usr/share/jamvm/classes.zip:/mnt/usb/usr/share/classpath/glibj.zip -jar filename.jar
+
 
 = J2ME Phone (e.g. Symbian, ...) =
 
