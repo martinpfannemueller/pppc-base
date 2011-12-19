@@ -533,7 +533,7 @@ public final class PluginManager implements IPluginManager, ISemanticManager,
 					}
 					listeners.fireEvent(EVENT_PLUGIN_REMOVED, pd);
 					registry.removePlugin(SystemID.SYSTEM, pd);
-					plugins.removeElement(this);
+					plugins.removeElement(plugin);
 				}
 			}
 		}
