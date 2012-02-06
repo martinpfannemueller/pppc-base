@@ -532,7 +532,7 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 		while (!monitor.isCanceled()) {
 			BluetoothSocket connection = null;
 			try {
-				connection = server.accept(10000);
+				connection = server.accept(10);
 				String device = connection.getRemoteDevice().getAddress().toUpperCase();
 				Logging.debug(getClass(), "Accepted incoming from " + device + ".");
 				InputStream is = connection.getInputStream();
@@ -570,7 +570,10 @@ public class MxBluetoothTransceiver implements ITransceiver, IOperation, IMultip
 				}
 			} catch (IOException e) {
 				//Logging.error(getClass(), "Exception in bluetooth connect.", e);
-				if (monitor.isCanceled()) break;
+				if (monitor.isCanceled()) {
+					monitor.done();
+					break;
+				}
 				// try connect
 				LinkedList<BluetoothDevice> bonded = new LinkedList<BluetoothDevice>(adapter.getBondedDevices());
 				i: for (int j = bonded.size() - 1; j >= 0; j--) {
