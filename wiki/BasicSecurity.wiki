@@ -81,8 +81,8 @@ if /i not %createCA%==Y goto ende
 
 mkdir certs private newcerts crl
 type nul > index.txt
-echo 01 > serial
 :REM creates the file index.txt (similar to touch, but sets it to 0 bytes)
+echo 01 > serial
 echo.
 echo Creating EC parameters, this is a one-time process.
 echo.
@@ -116,20 +116,10 @@ openssl pkcs12 -export -in client%1-cert.pem -out client%1-cert.p12 -inkey clien
 
 openssl x509 -in client%1-cert.pem -inform PEM -out client%1-cert.der -outform DER
 
-:REM perl remove_certificate_from_private_key.pl client%1-req.pem
-
 openssl ec -in client%1-req.pem -inform PEM -out client%1-priv.der -outform DER
 
-:REM Perl outputs the file client%1-req.pem.priv DOES NOT WORK, changed file name!
-
-:REM openssl pkcs8 -in client%1-req.pem.priv -inform PEM -out client%1-req.pem.priv.tmp -outform DER -topk8
-
-:REM openssl pkcs8 -in client%1-req.pem.priv.tmp -inform DER -out client%1-req.pem.priv -outform DER
-
-:del client%1-req.pem.priv.tmp
 del client%1-req.pem
 del client%1-tmp.pem
-:REM copy client%1-req.pem.priv private\client%1.priv
 copy client%1-priv.der private\%1.priv
 copy client%1-cert.der newcerts\%1.der
 
@@ -292,14 +282,14 @@ localityName_default		= Duisburg
 #1.organizationName_default	= World Wide Web Pty Ltd
 
 organizationalUnitName		= Organizational Unit Name (eg, section)
-organizationalUnitName_default	= NES
+organizationalUnitName_default	= yourUnit
 
 commonName			= Common Name (eg, Client 1)
 commonName_max			= 64
 
 emailAddress			= Email Address
 emailAddress_max		= 64
-emailAddress_default		= wolfgang.apolinarski@uni-due.de
+emailAddress_default		= your@e-mail.com
 
 # SET-ex3			= SET extension number 3
 
