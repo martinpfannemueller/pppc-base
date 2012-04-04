@@ -36,7 +36,7 @@ To generate keys, you can use [http://www.openssl.org/ OpenSSL]. In the followin
    * You can also edit other attributes like the "default_days".
   * Use the createca.cmd file to create an ECC certificate authority.
    * This will create a self-signed CA certificate.
-   * We currently use the ECC curve sect160r1 (this is the one supported by the fastecc extensions, but you can also use other ECC curves or RSA certificates - however, they are much slower).
+   * We currently use the ECC curve secp160r1 (this is the one supported by the fastecc extensions, but you can also use other ECC curves or RSA certificates - however, they are much slower).
   * Only distribute the certification authority certificate to the devices, do not put the private key there.
   * To create certificates for the devices itself, please read the following section.
 
