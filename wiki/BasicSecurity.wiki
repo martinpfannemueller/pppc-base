@@ -289,7 +289,7 @@ commonName_max			= 64
 
 emailAddress			= Email Address
 emailAddress_max		= 64
-emailAddress_default		= your@e-mail.com
+emailAddress_default		= your_e-mail@example.com
 
 # SET-ex3			= SET extension number 3
 
