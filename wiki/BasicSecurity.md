@@ -1,10 +1,10 @@
-#summary A brief description on how to secure BASE.
+#Security
 
-= Introduction =
+#Introduction
 
 The following sections contain some documentation on the secure middleware. Specifically, it describes how to generate certificates and how to use them in your programs.
 
-= Security in BASE =
+##Security in BASE
 
 Using the Bouncycastle library, BASE is able to secure communication thereby providing authenticity, integrity and secrecy. Following its micro-broker architecture, BASE does this via a minimal security core which can be found in the *base-core-security* project and an extensible set of plug-ins which are contained in the *base-plugin-security* project. The security core manages keys and certificates that are exchanged and used by plug-ins. To automate key exchange, BASE makes use of asymmetric cryptography. This requires each device to be equipped with an asymmetric key pair that is either self-signed or signed by some other key pair. Using certificate hierarchies it is possible to define trust relations between different (sets of) devices. This can be done by configuring trusted certificates for each device using its own key store.
 
@@ -12,7 +12,7 @@ If a device is equipped with a key store and the necessary plug-ins, developers 
 
 An example on how this works can be found in the repository. Just have a look at the *base-tutorial-security* project. As usual, security complicates application development since it is necessary to perform some initial configuration. Specifically, it is necessary to generate and distribute certificates according to goals of the application. The generation of certificates and keys can be done using [http://www.openssl.org/ OpenSSL] which results in the following overall approach.
 
-= Overall Approach =
+##Overall Approach
 
  * In order to use authentication and encryption you need to configure the middleware with a certificate. To do this:
   * Generate an asymmetric key pair using OpenSSL and sign it with some key to create a certificate for the public key.
@@ -23,11 +23,11 @@ An example on how this works can be found in the repository. Just have a look at
   * Note: If you miss one of the steps above, the middleware will not be able to establish a secure connection. This will result in "could not connect" messages when another semantic tries to open a connection.
  * In addition to automatic key exchange, you can also configure devices with pair-wise keys. To do this, call the appropriate set key methods on the key store. When setting the keys, you need to ensure that each device is equipped with the same key for a particular pair of devices. Failure to do so will result in "could not connect" messages. By setting keys manually, you can avoid the cost of automatic key establishment at the price of a higher complexity with respect to configuration. However, you will not be able to avoid the higher latency introduced by encryption performed by the secure modifier. If you use manual key distribution for all relevant device pairs, you can omit the installation of the key exchange semantic.
 
-= Key Generation =
+##Key Generation
 
 To generate keys, you can use [http://www.openssl.org/ OpenSSL]. In the following, we outline the overall process and provide configurations and scripts to simplify it. The scripts use a specific ECC curve due to the fact that the SunSPOT SDK provides an extremely efficient implementation for it. This implementation can be activated using the *base-extension-fastecc* project. However, one of the libraries required for this to work is licensed under GPL V2 - so if you decide to use it, you are bound to its license terms. 
 
-== Certificate Authority ==
+###Certificate Authority
 
  * You can use OpenSSL to create a certificate authority (we tested the current version, 0.9.8o)
  * To create a root certification authority certificate.
@@ -40,7 +40,7 @@ To generate keys, you can use [http://www.openssl.org/ OpenSSL]. In the followin
   * Only distribute the certification authority certificate to the devices, do not put the private key there.
   * To create certificates for the devices itself, please read the following section.
 
-== Device Certificates ==
+###Device Certificates
  * You can use OpenSSL to create a certificate (we tested the current version, 0.9.8o)
  * First generate the certificate request
   * openssl req -nodes -new -x509 -keyout client-req.pem -out client-req.pem -days 365 -config openssl.cfg -newkey ec:ec_param.pem
@@ -61,9 +61,8 @@ To generate keys, you can use [http://www.openssl.org/ OpenSSL]. In the followin
   * copy client-req.pem.priv private\client.priv
  * You can also use the createdevice.cmd file below which automates these steps.
    
-== Createca.cmd ==
-
-{{{
+###Createca.cmd 
+```
 @echo off
 echo This script creates a new certificate authority
 echo including a root CA certificate in the current directory.
@@ -98,11 +97,10 @@ openssl req -new -x509 -keyout private\cakey.pem -out cacert.pem -days 3650 -con
 openssl pkcs12 -export -in cacert.pem -inkey private\cakey.pem -out caroot.p12 -cacerts -descert
 openssl x509 -in cacert.pem -inform PEM -out certs\cacert.der -outform DER
 :ende
-}}}
+```
 
-== Createdevice.cmd ==
-
-{{{
+###Createdevice.cmd
+```
 @echo off
 if "%~1"=="" goto parameter_wrong
 if [%1]==[help] goto parameter_wrong
@@ -134,12 +132,11 @@ echo Syntax: createClient ^<client name or number^>
 echo Example: "createClient 2"
 goto ende
 :ende
-}}}
+```
 
+###Openssl.cfg
 
-== Openssl.cfg ==
-
-{{{
+```
 #
 # OpenSSL example configuration file.
 # This is mostly being used for generation of certificate requests.
@@ -456,4 +453,4 @@ authorityKeyIdentifier=keyid,issuer:always
 # This really needs to be in place for it to be a proxy certificate.
 proxyCertInfo=critical,language:id-ppl-anyLanguage,pathlen:3,policy:foo
 
-}}}
+```
